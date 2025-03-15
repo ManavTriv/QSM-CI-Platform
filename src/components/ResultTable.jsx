@@ -7,6 +7,10 @@ import LoadingMessage from "./LoadingMessage";
 // TODO: TABLE SORTING
 //
 
+//
+// TODO: There are two LAPLACIAN VSHARP RTS
+//
+
 const tableClasses = {
   container: "p-2 mx-4",
   table: "min-w-full bg-white border border-gray-300 shadow-md rounded-lg overflow-hidden",
