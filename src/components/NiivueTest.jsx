@@ -12,7 +12,7 @@ const NiivueTest = () => {
 
       nv.attachToCanvas(canvasRef.current);
 
-      const imageUrl = "https://niivue.github.io/niivue/images/mni152.nii.gz"; // Remote file for testing
+      const imageUrl = "https://niivue.github.io/niivue/images/mni152.nii.gz";
       console.log("Loading image from URL:", imageUrl);
       nv.loadVolumes([{ url: imageUrl }])
         .then(() => {

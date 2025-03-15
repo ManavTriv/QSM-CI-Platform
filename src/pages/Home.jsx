@@ -1,18 +1,18 @@
-import { useEffect, useState } from "react";
-import NiivueTest from "../components/NiivueTest";
-import fetchData from "../hooks/useFetchData";
+import Navbar from "../components/Navbar";
+import ResultTable from "../components/ResultTable";
 
 const Home = () => {
-  const [images, setImages] = useState([]);
-
-  useEffect(() => {
-    fetchData().then(setImages);
-  }, []);
-
   return (
     <>
-      <p className="text-7xl">QSM-CI</p>
-      <NiivueTest />
+      <div className="bg-[#fffefb] min-h-screen w-full space-y-3">
+        <Navbar />
+        <div>
+          <p className="mx-4 p-2">
+            Description of QSM-CI and Web Interface purpose
+          </p>
+        </div>
+        <ResultTable />
+      </div>
     </>
   );
 };
