@@ -14,7 +14,7 @@ const NiivueViewer = ({ image }) => {
       backColor: [0, 0, 0, 1],
       crosshairColor: [244, 243, 238, 0.5],
     });
-    
+
     nvRef.current = nv;
 
     // Attach to the canvas
