@@ -158,7 +158,7 @@ const ResultTable = () => {
   }, [data, sortConfig]);
 
   if (error) return <ErrorMessage message={error.message} />;
-  return <LoadingMessage />;
+  if (loading) return <LoadingMessage />;
 
   return (
     <div className={tableClasses.container}>
