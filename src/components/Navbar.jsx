@@ -1,7 +1,7 @@
 import { Link, useMatch } from "react-router-dom";
 
 const linkStyles =
-  "text-lg font-semi-bold underline decoration-red-400 underline-offset-5 cursor-pointer hover:text-red-400 transition-all duration-300";
+  "text-lg font-[600] underline decoration-2 text-indigo-800 underline-offset-5 cursor-pointer hover:text-red-400 transition-all duration-300";
 
 const NavLink = ({ to, label }) => {
   const match = useMatch(to);
@@ -9,7 +9,7 @@ const NavLink = ({ to, label }) => {
   return (
     <Link to={to}>
       <p
-        className={`${linkStyles} ${match ? "text-red-400" : "text-stone-800"}`}
+        className={`${linkStyles} ${match ? "text-indigo-800" : "text-stone-800"}`}
       >
         {label}
       </p>
