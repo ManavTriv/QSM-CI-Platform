@@ -3,10 +3,6 @@ import Navbar from "../components/Navbar";
 import ImageSelect from "../components/ImageSelect";
 import NiivueViewer from "../components/NiivueViewer";
 
-//
-// TODO: There are two LAPLACIAN VSHARP RTS
-//
-
 const Images = () => {
   const [image, setImage] = useState(null);
 
