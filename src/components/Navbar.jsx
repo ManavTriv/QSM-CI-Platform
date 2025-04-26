@@ -5,7 +5,7 @@ const NavLink = ({ to, label }) => {
   const match = useMatch(to);
 
   return (
-    <Link to={to} className="group relative">
+    <Link to={to} className="group relative flex items-center">
       <p
         className={`text-md font-radio font-semibold cursor-pointer transition-colors duration-300 ${
           match
@@ -21,14 +21,14 @@ const NavLink = ({ to, label }) => {
 
 const Navbar = () => {
   return (
-    <div className="w-full p-5 pb-7 shadow-md flex flex-row justify-between items-center">
+    <div className="w-full px-5 py-7 shadow-md flex items-center justify-between">
       <div className="flex items-center gap-2">
         <Hospital size={24} className="text-indigo-400" />
         <h1 className="text-md font-radio font-semibold text-indigo-400 cursor-default">
           QSM-CI PLATFORM
         </h1>
       </div>
-      <nav className="flex space-x-6">
+      <nav className="flex items-center space-x-6">
         <NavLink to="/" label="HOME" />
         <NavLink to="/images" label="IMAGES" />
         <NavLink to="/compare" label="COMPARE" />
