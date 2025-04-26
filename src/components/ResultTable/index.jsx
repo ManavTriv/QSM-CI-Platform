@@ -7,7 +7,7 @@ import TableHeader from "./TableHeader";
 import TableBody from "./TableBody";
 
 const tableClasses = {
-  container: "p-4 md:p-2 mx-2 md:mx-4 overflow-x-auto",
+  container: "px-2 mx-4 pb-1 overflow-x-auto",
   table:
     "min-w-full bg-white border border-indigo-100 shadow-md rounded-lg overflow-hidden border-collapse separate",
 };
@@ -24,6 +24,8 @@ const ResultTable = () => {
   const handleMetricClick = (metric) => {
     navigate(`/metric?metric=${metric}`);
   };
+
+  console.log(data)
 
   const requestSort = (key) => {
     if (isSorting) return;

@@ -3,7 +3,7 @@ import React, { memo } from "react";
 const tableClasses = {
   tbody: "divide-y divide-indigo-100",
   tr: "hover:bg-indigo-50 transition-colors duration-75",
-  td: "px-6 py-4 text-sm text-stone-800 border-b border-indigo-100",
+  td: "font-radio px-6 py-4 text-sm text-stone-800 border-b border-indigo-100",
 };
 
 const TableBody = memo(({ data, navigate }) => (
@@ -12,7 +12,7 @@ const TableBody = memo(({ data, navigate }) => (
       <tr key={entry.id} className={tableClasses.tr}>
         <td className={`${tableClasses.td} font-medium`}>
           <span
-            className="hover:text-indigo-600 cursor-pointer"
+            className="hover:text-indigo-400 cursor-pointer"
             onClick={() =>
               navigate(`/algorithm?name=${encodeURIComponent(entry.name)}`)
             }

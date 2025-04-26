@@ -3,9 +3,9 @@ import SortIcon from "./SortIcon";
 
 const tableClasses = {
   thead: "bg-indigo-50",
-  th: "px-6 py-3 border-b border-indigo-200 text-left text-sm font-semibold uppercase tracking-wider text-stone-800",
+  th: "font-radio px-6 py-3 border-b border-indigo-200 text-left text-sm font-semibold uppercase tracking-wider text-stone-800",
   sortableHeader: "flex items-center gap-2",
-  headerText: "hover:text-indigo-600 cursor-pointer",
+  headerText: "hover:text-indigo-400 cursor-pointer",
   nonSortableHeader: "",
 };
 

@@ -2,7 +2,7 @@ import React from "react";
 import { ChevronUp, ChevronDown, ChevronsUpDown } from "lucide-react";
 
 const tableClasses = {
-  sortIcon: "cursor-pointer hover:text-indigo-600 w-4 flex justify-center",
+  sortIcon: "cursor-pointer hover:text-indigo-400 w-4 flex justify-center",
 };
 
 const SortIcon = ({ direction }) => {

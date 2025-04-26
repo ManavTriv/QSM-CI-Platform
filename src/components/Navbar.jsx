@@ -1,13 +1,19 @@
 import { Link, useMatch } from "react-router-dom";
+import { Hospital } from "lucide-react";
 
 const NavLink = ({ to, label }) => {
   const match = useMatch(to);
 
   return (
     <Link to={to} className="group relative">
-      <p className={`text-lg font-[600] cursor-pointer ${match ? "text-indigo-600" : "text-stone-800"}`}>
+      <p
+        className={`text-md font-radio font-semibold cursor-pointer transition-colors duration-300 ${
+          match
+            ? "text-indigo-400"
+            : "text-stone-800 group-hover:text-indigo-400"
+        }`}
+      >
         {label}
-        <span className={`absolute left-0 bottom-0 h-0.5 bg-indigo-600 transition-all duration-300 ${match ? "w-full" : "w-0 group-hover:w-full"}`}></span>
       </p>
     </Link>
   );
@@ -16,13 +22,16 @@ const NavLink = ({ to, label }) => {
 const Navbar = () => {
   return (
     <div className="w-full p-5 pb-7 shadow-md flex flex-row justify-between items-center">
-      <h1 className="text-lg font-[600] text-indigo-800 cursor-default">
-        QSM-CI Web Interface
-      </h1>
+      <div className="flex items-center gap-2">
+        <Hospital size={24} className="text-indigo-400" />
+        <h1 className="text-md font-radio font-semibold text-indigo-400 cursor-default">
+          QSM-CI PLATFORM
+        </h1>
+      </div>
       <nav className="flex space-x-6">
-        <NavLink to="/" label="Home" />
-        <NavLink to="/images" label="Images" />
-        <NavLink to="/compare" label="Compare" />
+        <NavLink to="/" label="HOME" />
+        <NavLink to="/images" label="IMAGES" />
+        <NavLink to="/compare" label="COMPARE" />
       </nav>
     </div>
   );

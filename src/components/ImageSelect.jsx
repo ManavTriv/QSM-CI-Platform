@@ -1,10 +1,12 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import useProcessedData from "../hooks/useProcessedData";
 import ErrorMessage from "./ErrorMessage";
 import LoadingMessage from "./LoadingMessage";
 
 const ImageSelect = ({ setImage }) => {
   const { data, error, loading } = useProcessedData();
+  const [selectedUrl, setSelectedUrl] = useState(null);
+
   const filteredData = useMemo(() => {
     return data.map(({ url, name }) => ({ url, name }));
   }, [data]);
@@ -12,28 +14,30 @@ const ImageSelect = ({ setImage }) => {
   if (error) return <ErrorMessage message={error.message} />;
   if (loading) return <LoadingMessage />;
 
-  const handleChange = (event) => {
-    const selectedUrl = event.target.value;
-    setImage(selectedUrl);
+  const handleSelect = (url) => {
+    setImage(url);
+    setSelectedUrl(url);
   };
 
   return (
-    <div className="flex flex-row items-center space-x-2 mx-6">
-      <label htmlFor="algorithm-select" className="text-md text-stone-800">
-        Choose an algorithm:
-      </label>
-      <select
-        id="algorithm-select"
-        onChange={handleChange}
-        className="px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-400 text-md"
-      >
-        <option value="">Select an algorithm</option>
+    <div className="px-6">
+      <div className="flex overflow-x-auto space-x-2">
         {filteredData.map((item, index) => (
-          <option key={index} value={item.url}>
+          <button
+            key={index}
+            onClick={() => handleSelect(item.url)}
+            className={`flex-shrink-0 whitespace-nowrap px-4 py-2 rounded-full font-radio text-sm transition-all
+              ${
+                selectedUrl === item.url
+                  ? "bg-indigo-400 text-white"
+                  : "bg-gray-100 text-stone-800 hover:bg-indigo-100 hover:text-indigo-500"
+              } 
+              hover:cursor-pointer`}
+          >
             {item.name}
-          </option>
+          </button>
         ))}
-      </select>
+      </div>
     </div>
   );
 };

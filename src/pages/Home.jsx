@@ -1,16 +1,13 @@
 import Navbar from "../components/Navbar";
 import ResultTable from "../components/ResultTable";
+import HomeOverview from "../components/HomeOverview";
 
 const Home = () => {
   return (
     <>
-      <div className="bg-[#fffefb] min-h-screen w-full space-y-3">
+      <div className="bg-[#fffefb] min-h-screen w-full space-y-5">
         <Navbar />
-        <div>
-          <p className="mx-4 p-2">
-            Description of QSM-CI and Web Interface purpose
-          </p>
-        </div>
+        <HomeOverview />
         <ResultTable />
       </div>
     </>

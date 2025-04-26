@@ -12,10 +12,15 @@ const Images = () => {
 
   return (
     <>
-      <div className="bg-[#fffefb] min-h-screen w-full space-y-3">
+      <div className="bg-[#fffefb] min-h-screen w-full space-y-5">
         <Navbar />
-        <div>
-          <p className="mx-4 p-2">Description of image viewer</p>
+        <div className="px-2 mx-4 overflow-x-auto space-y-3">
+          <h1 className="font-radio text-indigo-400 font-semibold">
+            QSM Medical Image Viewer
+          </h1>
+          <p className="font-radio text-[0.9375rem]">
+            Select an algorithm to view its susceptibility map
+          </p>
         </div>
         <ImageSelect setImage={updateImage} />
         {image && <NiivueViewer image={image} />}
