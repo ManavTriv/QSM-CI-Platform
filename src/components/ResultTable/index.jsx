@@ -25,8 +25,6 @@ const ResultTable = () => {
     navigate(`/metric?metric=${metric}`);
   };
 
-  console.log(data)
-
   const requestSort = (key) => {
     if (isSorting) return;
 

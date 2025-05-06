@@ -30,7 +30,7 @@ const AlgorithmContent = () => {
       </div>
       <div className="px-2 mx-4 overflow-x-auto space-y-3">
         <div className="space-y-1">
-          <h1 className="font-radio text-indigo-400 font-semibold text-lg">
+          <h1 className="font-radio text-indigo-400 font-semibold ">
             {algorithmName}
           </h1>
           {tags && (
@@ -38,7 +38,7 @@ const AlgorithmContent = () => {
               {tags.map((tag) => (
                 <span
                   key={tag}
-                  className="font-radio px-2 py-1 text-xs font-medium bg-indigo-100 text-stone-800 rounded-full"
+                  className="font-radio px-2 py-1 text-[0.68rem] font-medium bg-indigo-100 text-stone-800 rounded-full"
                 >
                   {tag}
                 </span>

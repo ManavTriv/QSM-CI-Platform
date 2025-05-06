@@ -14,9 +14,15 @@ const ImageSelect = ({ setImage }) => {
   if (error) return <ErrorMessage message={error.message} />;
   if (loading) return <LoadingMessage />;
 
+
   const handleSelect = (url) => {
-    setImage(url);
-    setSelectedUrl(url);
+    if (selectedUrl === url) {
+      setSelectedUrl(null);
+      setImage(null);
+    } else {
+      setSelectedUrl(url);
+      setImage(url);
+    }
   };
 
   return (
