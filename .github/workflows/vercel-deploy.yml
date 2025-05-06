@@ -28,13 +28,10 @@ jobs:
           touch .env
           echo "VITE_PARSE_APP_ID=${{ secrets.VITE_PARSE_APP_ID }}" >> .env
           echo "VITE_PARSE_JS_KEY=${{ secrets.VITE_PARSE_JS_KEY }}" >> .env
-          # Add other environment variables if needed
-          cat .env | grep -v 'PARSE_' # Debug (don't show secrets in logs)
+          echo ".env file created with Parse variables"
+          ls -la .env
 
       - name: Build project
-        env:
-          VITE_PARSE_APP_ID: ${{ secrets.VITE_PARSE_APP_ID }}
-          VITE_PARSE_JS_KEY: ${{ secrets.VITE_PARSE_JS_KEY }}
         run: npm run build
 
       - name: Verify build output
