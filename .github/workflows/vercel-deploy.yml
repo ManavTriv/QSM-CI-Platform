@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-    workflow_dispatch:
+  workflow_dispatch:
 
 jobs:
   deploy:
@@ -14,13 +14,22 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Setup Node
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18 
+          node-version: 18
+          cache: 'npm'
 
       - name: Install dependencies
         run: npm ci
+
+      - name: Create .env file
+        run: |
+          touch .env
+          echo "VITE_PARSE_APP_ID=${{ secrets.VITE_PARSE_APP_ID }}" >> .env
+          echo "VITE_PARSE_JS_KEY=${{ secrets.VITE_PARSE_JS_KEY }}" >> .env
+          # Add other environment variables if needed
+          cat .env | grep -v 'PARSE_' # Debug (don't show secrets in logs)
 
       - name: Build project
         env:
@@ -28,12 +37,16 @@ jobs:
           VITE_PARSE_JS_KEY: ${{ secrets.VITE_PARSE_JS_KEY }}
         run: npm run build
 
+      - name: Verify build output
+        run: ls -la dist/
+
       - name: Install Vercel CLI
-        run: npm install -g vercel
+        run: npm install -g vercel@latest
 
       - name: Deploy to Vercel
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-        run: vercel --prod --token $VERCEL_TOKEN --yes
+        run: |
+          vercel deploy --prod --token $VERCEL_TOKEN --yes
