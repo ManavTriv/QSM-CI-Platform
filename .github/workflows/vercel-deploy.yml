@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+    workflow_dispatch:
 
 jobs:
   deploy:
@@ -13,6 +14,20 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18  # or your project's version
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        env:
+          VITE_PARSE_APP_ID: ${{ secrets.VITE_PARSE_APP_ID }}
+          VITE_PARSE_JS_KEY: ${{ secrets.VITE_PARSE_JS_KEY }}
+        run: npm run build
+
       - name: Install Vercel CLI
         run: npm install -g vercel
 
@@ -21,6 +36,4 @@ jobs:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-          VITE_PARSE_APP_ID: ${{ secrets.VITE_PARSE_APP_ID }}
-          VITE_PARSE_JS_KEY: ${{ secrets.VITE_PARSE_JS_KEY }}
         run: vercel --prod --token $VERCEL_TOKEN --yes
