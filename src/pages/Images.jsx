@@ -2,7 +2,6 @@ import { useState } from "react";
 import Navbar from "../components/Navbar";
 import ImageSelect from "../components/ImageSelect";
 import NiivueViewer from "../components/NiivueViewer";
-import TestViewer from "../components/TestViewer";
 
 const Images = () => {
   const [image, setImage] = useState(null);

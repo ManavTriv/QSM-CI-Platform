@@ -32,6 +32,7 @@ const Navbar = () => {
         <NavLink to="/" label="HOME" />
         <NavLink to="/images" label="IMAGES" />
         <NavLink to="/compare" label="COMPARE" />
+        <NavLink to="/contribute" label="CONTRIBUTE" />
       </nav>
     </div>
   );
