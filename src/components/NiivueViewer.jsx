@@ -6,7 +6,6 @@ const NiivueViewer = ({ image }) => {
   const nvRef = useRef(null);
 
   useEffect(() => {
-    // Create a new Niivue instance
     const nv = new Niivue({
       loadingText: "Loading",
       dragAndDropEnabled: true,
@@ -17,21 +16,16 @@ const NiivueViewer = ({ image }) => {
 
     nvRef.current = nv;
 
-    // Attach to the canvas
     nv.attachToCanvas(canvasRef.current);
 
-    // Load the new image
-    console.log("Loading image from URL:", image);
     nv.loadVolumes([{ url: image }])
       .then(() => {
-        console.log("Image loaded successfully");
         nv.setSliceType(nv.sliceTypeMultiplanar);
       })
       .catch((error) => {
         console.error("Failed to load image:", error);
       });
 
-    // Cleanup function
     return () => {
       if (nvRef.current) {
         nvRef.current = null;

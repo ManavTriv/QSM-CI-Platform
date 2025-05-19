@@ -7,6 +7,8 @@ const ImageSelect = ({ setImage }) => {
   const { data, error, loading } = useProcessedData();
   const [selectedUrl, setSelectedUrl] = useState(null);
 
+  console.log("ImageSelect data", data);
+
   const filteredData = useMemo(() => {
     return data.map(({ url, name }) => ({ url, name }));
   }, [data]);
