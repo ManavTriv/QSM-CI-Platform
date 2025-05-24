@@ -6,4 +6,6 @@ Parse.initialize(
 );
 Parse.serverURL = "https://parseapi.back4app.com/";
 
+export const AnonymousUtils = Parse.AnonymousUtils;
+
 export default Parse;

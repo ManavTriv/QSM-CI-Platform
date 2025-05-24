@@ -1,21 +1,18 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import useProcessedData from "../hooks/useProcessedData";
+import useEloUpdater from "../hooks/useEloUpdater";
 import ErrorMessage from "./ErrorMessage";
 import LoadingMessage from "./LoadingMessage";
 
 const AlgorithmComparison = () => {
   const { data, error, loading } = useProcessedData();
+  const updateElo = useEloUpdater();
+
   const [currentPair, setCurrentPair] = useState([]);
   const [usedIndices, setUsedIndices] = useState([]);
   const [selectedAlgorithm, setSelectedAlgorithm] = useState(null);
   const [showNames, setShowNames] = useState(false);
-
-  useEffect(() => {
-    if (data && usedIndices.length >= data.length) {
-      setUsedIndices([]);
-    }
-  }, [usedIndices, data]);
+  const [eloError, setEloError] = useState(null);
 
   const generateNewPair = () => {
     if (!data || data.length < 2) return;
@@ -49,16 +46,21 @@ const AlgorithmComparison = () => {
     }
   }, [data]);
 
-  const handleSelect = (algorithm) => {
+  const handleSelect = async (algorithm) => {
     setSelectedAlgorithm(algorithm);
     setShowNames(true);
+    const error = await updateElo(algorithm.objectId, 10);
+    if (error) {
+      setEloError(error);
+    }
   };
 
   const handleNext = () => {
     generateNewPair();
   };
 
-  if (error) return <ErrorMessage message={error.message} />;
+  if (error || eloError)
+    return <ErrorMessage message={(error || eloError).message} />;
   if (loading) return <LoadingMessage />;
 
   return (
