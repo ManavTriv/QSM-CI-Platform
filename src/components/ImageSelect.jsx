@@ -60,7 +60,7 @@ const ImageSelect = ({ setImage }) => {
         <button
           ref={buttonRef}
           onClick={() => setIsOpen(!isOpen)}
-          className={`flex-grow flex justify-between items-center px-4 py-2 rounded-full text-sm font-radio shadow-sm transition-colors focus:outline-none ${
+          className={`cursor-pointer flex-grow flex justify-between items-center px-4 py-2 rounded-full text-sm font-radio shadow-sm transition-colors focus:outline-none ${
             selectedUrl
               ? "bg-indigo-400 text-white"
               : "bg-gray-100 text-stone-800 hover:bg-indigo-100 hover:text-indigo-500"
@@ -68,7 +68,7 @@ const ImageSelect = ({ setImage }) => {
         >
           <span className="truncate">{selectedName}</span>
           <ChevronDown
-            className={`h-4 w-4 ml-2 transition-transform ${
+            className={`h-4 w-4 ml-2 transition-transform cursor-pointer ${
               isOpen ? "rotate-180" : ""
             }`}
           />
@@ -77,7 +77,7 @@ const ImageSelect = ({ setImage }) => {
         {selectedUrl && (
           <button
             onClick={clearSelection}
-            className="text-red-500 hover:text-red-600 transition-colors"
+            className="cursor-pointer text-red-500 hover:text-red-600 transition-colors"
             aria-label="Clear selection"
           >
             <XCircle className="w-5 h-5" />
@@ -105,7 +105,7 @@ const ImageSelect = ({ setImage }) => {
               <li key={item.url}>
                 <button
                   onClick={() => handleSelect(item.url)}
-                  className={`w-full text-left px-4 py-2 text-sm font-radio transition-colors ${
+                  className={`cursor-pointer w-full text-left px-4 py-2 text-sm font-radio transition-colors ${
                     selectedUrl === item.url
                       ? "bg-indigo-400 text-white"
                       : "text-stone-800 bg-white hover:bg-indigo-100 hover:text-indigo-500"
