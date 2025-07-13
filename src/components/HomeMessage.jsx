@@ -1,6 +1,6 @@
 import React from "react";
 
-const HomeOverview = () => {
+const OverviewMessage = () => {
   return (
     <div className="px-2 mx-4 overflow-x-auto space-y-3">
       <h1 className="font-radio text-indigo-400 font-semibold">
@@ -13,4 +13,4 @@ const HomeOverview = () => {
   );
 };
 
-export default HomeOverview;
+export default OverviewMessage;

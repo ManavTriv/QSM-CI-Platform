@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import Home from "../pages/Home";
+import Overview from "../pages/Overview";
 import Images from "../pages/Images";
 import Compare from "../pages/Compare";
 import Metric from "../pages/Metric";
@@ -10,6 +11,7 @@ const AppRouter = () => {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
+      <Route path="/overview" element={<Overview />} />
       <Route path="/images" element={<Images />} />
       <Route path="/compare" element={<Compare />} />
       <Route path="/metric" element={<Metric />} />
