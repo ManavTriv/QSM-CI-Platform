@@ -5,37 +5,41 @@ import LoadingMessage from "./LoadingMessage";
 import { ChevronDown, XCircle } from "lucide-react";
 
 const ImageSelect = ({ setImage }) => {
-  const { data, error, loading } = useProcessedData();
   const [selectedUrl, setSelectedUrl] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [dropdownWidth, setDropdownWidth] = useState(null);
   const buttonRef = useRef(null);
 
+  const { data, error, loading } = useProcessedData();
+
   useEffect(() => {
-    if (buttonRef.current) {
+    if (isOpen && buttonRef.current) {
       setDropdownWidth(buttonRef.current.offsetWidth);
     }
-  }, [isOpen, data]);
+  }, [isOpen]);
 
   const filteredData = useMemo(() => {
-    return (
-      searchTerm
-        ? data.filter((item) =>
-            item.name.toLowerCase().includes(searchTerm.toLowerCase())
-          )
-        : data
-    ).map(({ url, name }) => ({ url, name }));
+    const items = searchTerm
+      ? data.filter((item) =>
+          item.name.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+      : data;
+    return items.map(({ url, name }) => ({ url, name }));
   }, [data, searchTerm]);
 
+  const selectedName = useMemo(
+    () =>
+      selectedUrl
+        ? data.find((item) => item.url === selectedUrl)?.name
+        : "Select an algorithm",
+    [data, selectedUrl]
+  );
+
   const handleSelect = (url) => {
-    if (selectedUrl === url) {
-      setSelectedUrl(null);
-      setImage(null);
-    } else {
-      setSelectedUrl(url);
-      setImage(url);
-    }
+    const newUrl = selectedUrl === url ? null : url;
+    setSelectedUrl(newUrl);
+    setImage(newUrl);
     setIsOpen(false);
   };
 
@@ -45,11 +49,7 @@ const ImageSelect = ({ setImage }) => {
     setIsOpen(false);
   };
 
-  const selectedName = useMemo(() => {
-    return selectedUrl
-      ? data.find((item) => item.url === selectedUrl)?.name
-      : "Select an algorithm";
-  }, [data, selectedUrl]);
+  const toggleDropdown = () => setIsOpen((prev) => !prev);
 
   if (error) return <ErrorMessage message={error.message} />;
   if (loading) return <LoadingMessage />;
@@ -59,8 +59,8 @@ const ImageSelect = ({ setImage }) => {
       <div className="flex items-center gap-2 flex-wrap w-full">
         <button
           ref={buttonRef}
-          onClick={() => setIsOpen(!isOpen)}
-          className={`cursor-pointer flex-grow flex justify-between items-center px-4 py-2 rounded-full text-sm font-radio shadow-sm transition-colors focus:outline-none ${
+          onClick={toggleDropdown}
+          className={`flex-grow flex justify-between items-center px-4 py-2 rounded-full text-sm font-radio shadow-sm transition-colors focus:outline-none ${
             selectedUrl
               ? "bg-indigo-400 text-white"
               : "bg-gray-100 text-stone-800 hover:bg-indigo-100 hover:text-indigo-500"
@@ -68,7 +68,7 @@ const ImageSelect = ({ setImage }) => {
         >
           <span className="truncate">{selectedName}</span>
           <ChevronDown
-            className={`h-4 w-4 ml-2 transition-transform cursor-pointer ${
+            className={`h-4 w-4 ml-2 transition-transform ${
               isOpen ? "rotate-180" : ""
             }`}
           />
@@ -77,7 +77,7 @@ const ImageSelect = ({ setImage }) => {
         {selectedUrl && (
           <button
             onClick={clearSelection}
-            className="cursor-pointer text-red-500 hover:text-red-600 transition-colors"
+            className="text-red-500 hover:text-red-600 transition-colors"
             aria-label="Clear selection"
           >
             <XCircle className="w-5 h-5" />
@@ -87,7 +87,7 @@ const ImageSelect = ({ setImage }) => {
 
       {isOpen && (
         <div
-          className="absolute z-20 mt-2 bg-white border border-gray-200 rounded-md shadow-xl max-h-64 overflow-auto w-full"
+          className="absolute z-20 mt-2 bg-white border border-gray-200 rounded-md shadow-xl max-h-64 overflow-auto"
           style={{ width: dropdownWidth }}
         >
           <div className="sticky top-0 bg-white p-2 border-b border-gray-200 z-10">
@@ -97,6 +97,7 @@ const ImageSelect = ({ setImage }) => {
               className="w-full px-3 py-2 text-sm rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
+              autoFocus
             />
           </div>
 
@@ -105,10 +106,10 @@ const ImageSelect = ({ setImage }) => {
               <li key={item.url}>
                 <button
                   onClick={() => handleSelect(item.url)}
-                  className={`cursor-pointer w-full text-left px-4 py-2 text-sm font-radio transition-colors ${
+                  className={`w-full text-left px-4 py-2 text-sm font-radio transition-colors ${
                     selectedUrl === item.url
                       ? "bg-indigo-400 text-white"
-                      : "text-stone-800 bg-white hover:bg-indigo-100 hover:text-indigo-500"
+                      : "text-stone-800 hover:bg-indigo-100 hover:text-indigo-500"
                   }`}
                 >
                   {item.name}

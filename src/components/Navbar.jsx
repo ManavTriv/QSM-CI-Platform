@@ -29,7 +29,8 @@ const Navbar = () => {
         </h1>
       </div>
       <nav className="flex items-center space-x-6">
-        <NavLink to="/" label="OVERVIEW" />
+        <NavLink to="/" label="HOME" />
+        <NavLink to="/overview" label="OVERVIEW" />
         <NavLink to="/images" label="IMAGES" />
         <NavLink to="/compare" label="COMPARE" />
         <NavLink to="/contribute" label="CONTRIBUTE" />
