@@ -1,19 +1,17 @@
 import React from "react";
 import Navbar from "../components/Navbar";
-
+import ContributeMessage from "../components/ContributeMessage.jsx";
+/*
+  Note: The error is caused by a mismatch in the casing of the filename.
+  Make sure the file is named exactly 'ContributeMessage.jsx' (not 'ContributeMEssage.jsx') in your components folder.
+  On case-sensitive file systems (like Linux), this matters.
+*/
 const Contribute = () => {
   return (
     <>
       <div className="bg-[#fffefb] min-h-screen w-full space-y-5">
         <Navbar />
-        <div className="px-2 mx-4 overflow-x-auto space-y-3">
-          <h1 className="font-radio text-indigo-400 font-semibold">
-            Contribute to QSM-CI
-          </h1>
-          <p className="font-radio text-[0.9375rem]">
-            Help contribute to QSM-CI
-          </p>
-        </div>
+        <ContributeMessage />
       </div>
     </>
   );

@@ -28,7 +28,7 @@ const OverviewMessage = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center bg-[#fffefb] py-12 space-y-16 font-radio">
-      <h1 className="text-3xl font-semibold text-indigo-400 text-center">
+      <h1 className="text-2xl font-semibold text-indigo-400 text-center">
         Welcome to the QSM-CI Platform
       </h1>
 
