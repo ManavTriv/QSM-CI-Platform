@@ -34,13 +34,31 @@ const NiivueViewer = ({ image }) => {
   }, [image]);
 
   return (
-    <div style={{ display: "flex", justifyContent: "center" }}>
-      <canvas
-        ref={canvasRef}
-        width="512"
-        height="512"
-        style={{ display: "block", maxWidth: "100%" }}
-      ></canvas>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        width: "100vw",
+        paddingTop: 5, 
+      }}
+    >
+      <div
+        style={{
+          width: 900,
+          height: 350,
+          border: "3px solid #818cf8", 
+          borderRadius: 8,
+          boxSizing: "border-box",
+          overflow: "hidden",
+        }}
+      >
+        <canvas
+          ref={canvasRef}
+          width={900}
+          height={350}
+          style={{ display: "block", maxWidth: "100%", height: "auto" }}
+        />
+      </div>
     </div>
   );
 };
