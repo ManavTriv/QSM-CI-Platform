@@ -3,10 +3,13 @@ import useProcessedData from "../hooks/useProcessedData";
 import useEloUpdater from "../hooks/useEloUpdater";
 import ErrorMessage from "./ErrorMessage";
 import LoadingMessage from "./LoadingMessage";
+import NiivueViewer from "./NiivueViewer";
 
 const AlgorithmComparison = () => {
   const { data, error, loading } = useProcessedData();
   const updateElo = useEloUpdater();
+
+  console.log("Data:", data);
 
   const [currentPair, setCurrentPair] = useState([]);
   const [usedIndices, setUsedIndices] = useState([]);
@@ -64,46 +67,48 @@ const AlgorithmComparison = () => {
   if (loading) return <LoadingMessage />;
 
   return (
-    <div className="mt-8 flex flex-col items-center">
-      <div className="flex justify-center space-x-4 mb-8">
-        {currentPair.map((algorithm, index) => (
-          <div
-            key={algorithm.id}
-            className={`p-4 border-2 rounded-lg cursor-pointer transition-all whitespace-nowrap text-sm
-                  ${
-                    selectedAlgorithm?.id === algorithm.id
-                      ? "border-indigo-500 bg-indigo-50"
-                      : "border-gray-200"
-                  }
-                  ${showNames ? "" : "hover:border-indigo-300"}`}
-            onClick={() => !showNames && handleSelect(algorithm)}
-          >
-            <div className="w-64 h-64 bg-gray-100 flex items-center justify-center mb-2">
-              <span className="font-radio text-stone-850">Algorithm Image</span>
-            </div>
-            <div className="text-center">
-              {showNames ? (
-                <span className="font-radio text-stone-850 font-semibold">
-                  {algorithm.name}
-                </span>
-              ) : (
-                <span className="font-radio text-stone-850">
-                  Algorithm {index + 1}
-                </span>
-              )}
-            </div>
-          </div>
-        ))}
-      </div>
-
+    <div className="mt-8 flex flex-col items-center w-full max-w-screen-xl mx-auto px-4 bg-[#fffefb] pb-8 font-radio">
       {showNames && (
         <button
           onClick={handleNext}
-          className="px-4 py-2 rounded-full font-radio text-sm font-semibold transition-all bg-indigo-400 text-white hover:bg-indigo-500"
+          className="mb-8 px-6 py-2 rounded-full font-radio text-md font-semibold transition-all bg-indigo-400 text-white hover:bg-indigo-500"
         >
           NEXT COMPARISON
         </button>
       )}
+      <div className="flex flex-col space-y-8 w-full">
+        {currentPair.map((algorithm, index) => {
+          const isSelected = selectedAlgorithm?.id === algorithm.id;
+          return (
+            <div
+              key={algorithm.id}
+              className={`w-full rounded-xl overflow-hidden transition-all ring-1 py-2 ${
+                isSelected
+                  ? "ring-2 ring-indigo-500 bg-indigo-50"
+                  : "ring-gray-200 bg-white"
+              }`}
+            >
+              <div className="p-4">
+                <NiivueViewer image={algorithm.url} />
+              </div>
+              <div className="flex items-center justify-center gap-x-4 pb-2 px-2 bg-transparent">
+                <h3 className="font-radio text-lg font-medium text-stone-850">
+                  {showNames ? algorithm.name : `Algorithm ${index + 1}`}
+                </h3>
+
+                {!showNames && (
+                  <button
+                    onClick={() => handleSelect(algorithm)}
+                    className="px-4 py-1.5 cursor-pointer rounded-full font-radio text-sm font-semibold transition-all bg-indigo-400 text-white hover:bg-indigo-500"
+                  >
+                    SELECT
+                  </button>
+                )}
+              </div>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };
