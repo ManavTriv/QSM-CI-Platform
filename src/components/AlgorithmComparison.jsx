@@ -9,8 +9,6 @@ const AlgorithmComparison = () => {
   const { data, error, loading } = useProcessedData();
   const updateElo = useEloUpdater();
 
-  console.log("Data:", data);
-
   const [currentPair, setCurrentPair] = useState([]);
   const [usedIndices, setUsedIndices] = useState([]);
   const [selectedAlgorithm, setSelectedAlgorithm] = useState(null);
