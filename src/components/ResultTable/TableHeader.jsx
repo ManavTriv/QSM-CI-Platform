@@ -49,10 +49,7 @@ const TableHeader = memo(({ sortConfig, requestSort, onMetricClick }) => {
                 >
                   {header.label}
                 </span>
-                <span
-                  onClick={() => handleSortIconClick(header)}
-                  aria-label={`Sort by ${header.label}`}
-                >
+                <span onClick={() => handleSortIconClick(header)}>
                   <SortIcon
                     direction={
                       sortConfig.key === header.key

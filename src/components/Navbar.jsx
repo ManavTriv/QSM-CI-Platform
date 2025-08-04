@@ -12,7 +12,6 @@ const NavLink = ({ to, label }) => {
           ? "text-indigo-400 underline underline-offset-4"
           : "text-stone-800 hover:text-indigo-400 hover:underline hover:underline-offset-4"
       }`}
-      aria-current={match ? "page" : undefined}
     >
       {label}
     </Link>

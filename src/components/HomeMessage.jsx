@@ -25,17 +25,17 @@ const navItems = [
   },
 ];
 
-const OverviewMessage = () => {
+const HomeMessage = () => {
   return (
     <section className="min-h-screen flex flex-col items-center bg-[#fffefb] py-14 px-6 font-radio">
       <h1 className="text-3xl font-semibold text-indigo-400 text-center mb-12">
         Welcome to the QSM-CI Platform
       </h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-12 max-w-screen-xl">
-        {navItems.map(({ icon, title, link }, idx) => (
+        {navItems.map(({ icon, title, link }) => (
           <Link
             to={link}
-            key={idx}
+            key={title}
             className="flex flex-col items-center text-center p-5 w-48 bg-white rounded-2xl shadow-sm hover:shadow-lg transition-transform transform hover:scale-105 duration-300 group"
           >
             <div className="h-28 w-28 flex items-center justify-center rounded-full bg-indigo-50 group-hover:bg-indigo-100 transition-colors duration-300 text-indigo-400 shadow-inner">
@@ -52,4 +52,4 @@ const OverviewMessage = () => {
   );
 };
 
-export default OverviewMessage;
+export default HomeMessage;

@@ -9,7 +9,6 @@ const SortIcon = ({ direction }) => {
   const iconProps = {
     size: 16,
     className: tableClasses.sortIcon,
-    "aria-hidden": true,
   };
 
   if (direction === "asc") return <ChevronUp {...iconProps} />;

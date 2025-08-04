@@ -20,6 +20,7 @@ const ImageSelect = ({ setImage }) => {
   }, [isOpen]);
 
   const filteredData = useMemo(() => {
+    if (!data) return [];
     const items = searchTerm
       ? data.filter((item) =>
           item.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -60,7 +61,7 @@ const ImageSelect = ({ setImage }) => {
         <button
           ref={buttonRef}
           onClick={toggleDropdown}
-          className={`flex-grow flex justify-between items-center px-4 py-2 rounded-full text-sm font-radio shadow-sm transition-colors focus:outline-none cursor-pointer ${
+          className={`flex-grow cursor-pointer flex justify-between items-center px-4 py-2 rounded-full text-sm font-radio shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-400 ${
             selectedUrl
               ? "bg-indigo-400 text-white"
               : "bg-gray-100 text-stone-800 hover:bg-indigo-100 hover:text-indigo-500"
@@ -77,8 +78,7 @@ const ImageSelect = ({ setImage }) => {
         {selectedUrl && (
           <button
             onClick={clearSelection}
-            className="text-red-500 hover:text-red-600 transition-colors cursor-pointer"
-            aria-label="Clear selection"
+            className="text-red-500 hover:text-red-600 transition-colors focus:outline-none focus:ring-2 focus:ring-red-300 rounded-full cursor-pointer"
           >
             <XCircle className="w-5 h-5" />
           </button>
@@ -87,7 +87,7 @@ const ImageSelect = ({ setImage }) => {
 
       {isOpen && (
         <div
-          className="absolute z-20 mt-2 bg-white border border-gray-200 rounded-md shadow-xl max-h-64 overflow-auto"
+          className="absolute z-20 mt-2 bg-white border border-gray-200 rounded-md shadow-xl max-h-64 overflow-auto min-w-[12rem] max-w-full"
           style={{ width: dropdownWidth }}
         >
           <div className="sticky top-0 bg-white p-2 border-b border-gray-200 z-10">
@@ -101,22 +101,28 @@ const ImageSelect = ({ setImage }) => {
             />
           </div>
 
-          <ul className="divide-y divide-gray-100">
-            {filteredData.map((item) => (
-              <li key={item.url}>
-                <button
-                  onClick={() => handleSelect(item.url)}
-                  className={`w-full text-left px-4 py-2 text-sm font-radio transition-colors cursor-pointer ${
-                    selectedUrl === item.url
-                      ? "bg-indigo-400 text-white"
-                      : "text-stone-800 hover:bg-indigo-100 hover:text-indigo-500"
-                  }`}
-                >
-                  {item.name}
-                </button>
-              </li>
-            ))}
-          </ul>
+          {filteredData.length > 0 ? (
+            <ul className="divide-y divide-gray-100">
+              {filteredData.map((item) => (
+                <li key={item.url}>
+                  <button
+                    onClick={() => handleSelect(item.url)}
+                    className={`w-full text-left px-4 py-2 text-sm font-radio transition-colors cursor-pointer ${
+                      selectedUrl === item.url
+                        ? "bg-indigo-400 text-white"
+                        : "text-stone-800 hover:bg-indigo-100 hover:text-indigo-500"
+                    }`}
+                  >
+                    {item.name}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <div className="p-4 text-center text-sm text-gray-500 font-radio">
+              No algorithms found.
+            </div>
+          )}
         </div>
       )}
     </div>

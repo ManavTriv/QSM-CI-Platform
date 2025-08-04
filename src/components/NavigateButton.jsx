@@ -1,17 +1,18 @@
 import { useNavigate } from "react-router-dom";
-import { Home, MoveLeft } from "lucide-react";
+import { MoveLeft } from "lucide-react";
 import { useState } from "react";
 
-const NavigateButton = ({ to, label }) => {
+const NavigateButton = ({ to, label, icon: Icon }) => {
   const navigate = useNavigate();
   const [hovered, setHovered] = useState(false);
 
   return (
-    <div
+    <button
+      type="button"
       onClick={() => navigate(to)}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className={`flex items-center cursor-pointer bg-white shadow-md py-2 px-4 rounded-2xl gap-2 overflow-hidden transition-all duration-300 w-fit ${
+      className={`flex cursor-pointer items-center bg-white shadow-md py-2 px-4 rounded-2xl gap-2 overflow-hidden transition-all duration-300 w-fit ${
         hovered ? "pl-3 pr-4" : "pl-2 pr-4"
       }`}
     >
@@ -25,10 +26,12 @@ const NavigateButton = ({ to, label }) => {
         <MoveLeft size={15} />
       </div>
       <div className="flex items-center gap-2">
-        <Home size={15} className="transition-transform duration-300" />
+        {Icon && (
+          <Icon size={15} className="transition-transform duration-300" />
+        )}
         <p className="text-xs font-radio">{label}</p>
       </div>
-    </div>
+    </button>
   );
 };
 

@@ -7,6 +7,7 @@ import useProcessedData from "../hooks/useProcessedData";
 import ErrorMessage from "../components/ErrorMessage";
 import LoadingMessage from "../components/LoadingMessage";
 import MetricOverview from "../components/MetricOverview";
+import { BarChart } from "lucide-react";
 
 const MetricContent = () => {
   const location = useLocation();
@@ -21,7 +22,7 @@ const MetricContent = () => {
   return (
     <div className="space-y-5">
       <div className="px-2 mx-4">
-        <NavigateButton to="/" label="HOME" />
+        <NavigateButton to="/overview" label="OVERVIEW" icon={BarChart} />
       </div>
       <MetricOverview metric={metric} />
       <DotPlot data={data} metric={metric} />
