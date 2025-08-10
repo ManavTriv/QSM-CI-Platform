@@ -34,7 +34,8 @@ const NiivueViewer = ({ image }) => {
     nvRef.current = nv;
     nv.attachToCanvas(canvasRef.current);
 
-    nv.loadVolumes([{ url: image }])
+    nv
+      .loadVolumes([{ url: image }])
       .then(() => {
         nv.setSliceType(nv.sliceTypeMultiplanar);
 
@@ -48,7 +49,8 @@ const NiivueViewer = ({ image }) => {
             max: baseMax,
             width: baseWidth,
           };
-          applyWindow(brightness, contrast);
+          // Use default initial values without capturing state in this effect
+          applyWindow(50, 0);
         }
       })
       .catch((err) => console.error("Failed to load image:", err));
