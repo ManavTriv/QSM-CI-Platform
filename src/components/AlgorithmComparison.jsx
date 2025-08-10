@@ -15,6 +15,7 @@ const AlgorithmComparison = () => {
   const [selectedAlgorithm, setSelectedAlgorithm] = useState(null);
   const [showNames, setShowNames] = useState(false);
   const [eloError, setEloError] = useState(null);
+  const initializedRef = useRef(false);
 
   const generateNewPair = () => {
     if (!data || data.length < 2) return;
@@ -53,10 +54,12 @@ const AlgorithmComparison = () => {
   };
 
   useEffect(() => {
+    if (initializedRef.current) return;
     if (data && data.length >= 2) {
       generateNewPair();
+      initializedRef.current = true;
     }
-  }, [data]);
+  }, [data, generateNewPair]);
 
   const handleSelect = async (algorithm) => {
     setSelectedAlgorithm(algorithm);

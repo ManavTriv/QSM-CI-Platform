@@ -10,24 +10,25 @@ import {
 } from "recharts";
 
 const formatMetricName = (name) =>
-  name.replace(/[_\-]/g, " ").replace(/\b\w/g, (char) => char.toUpperCase());
+  name.replace(/[_-]/g, " ").replace(/\b\w/g, (char) => char.toUpperCase());
 
 const DotPlot = ({ data, metric }) => {
-  if (!data || !metric || data.length === 0) {
-    return (
-      <div className="text-center text-gray-500 py-12 font-radio">
-        No data available to plot.
-      </div>
-    );
-  }
-
   const chartData = useMemo(() => {
+    if (!data || !metric || data.length === 0) return [];
     return data.map((algorithm) => ({
       x: algorithm.name,
       y: algorithm[metric] ?? 0,
       metricName: formatMetricName(metric),
     }));
   }, [data, metric]);
+
+  if (chartData.length === 0) {
+    return (
+      <div className="text-center text-gray-500 py-12 font-radio">
+        No data available to plot.
+      </div>
+    );
+  }
 
   return (
     <div className="bg-white px-6 py-8 mx-4 md:mx-6 lg:mx-12 rounded-2xl shadow-lg border border-indigo-100 font-radio">
