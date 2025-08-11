@@ -4,21 +4,27 @@ import { Niivue } from "@niivue/niivue";
 const NiivueViewer = ({ image }) => {
   const canvasRef = useRef(null);
   const nvRef = useRef(null);
-  const baseWindowRef = useRef({ min: 0, max: 1, width: 1 });
+  const initialWindowRef = useRef({ min: 0, max: 1 });
 
-  const [brightness, setBrightness] = useState(50);
-  const [contrast, setContrast] = useState(0);
+  const [windowMin, setWindowMin] = useState(null);
+  const [windowMax, setWindowMax] = useState(null);
 
-  const applyWindow = (bPct, cPct) => {
+  const formatNumber = (n) => (Number.isFinite(n) ? n.toFixed(3) : "");
+
+  const applyWindow = (minVal, maxVal) => {
     const nv = nvRef.current;
     if (!nv || !nv.volumes || !nv.volumes[0]) return;
 
-    const { min, max, width } = baseWindowRef.current;
-    const newWidth = Math.max(1e-6, (1 - cPct / 100) * width);
-    const center = min + ((100 - bPct) / 100) * (max - min);
+    const epsilon = 1e-6;
+    let newMin = Number.isFinite(minVal) ? minVal : initialWindowRef.current.min;
+    let newMax = Number.isFinite(maxVal) ? maxVal : initialWindowRef.current.max;
 
-    nv.volumes[0].cal_min = center - newWidth / 2;
-    nv.volumes[0].cal_max = center + newWidth / 2;
+    if (newMax - newMin < epsilon) {
+      newMax = newMin + epsilon;
+    }
+
+    nv.volumes[0].cal_min = newMin;
+    nv.volumes[0].cal_max = newMax;
     nv.updateGLVolume();
   };
 
@@ -41,16 +47,12 @@ const NiivueViewer = ({ image }) => {
 
         if (nv.volumes?.[0]) {
           const v = nv.volumes[0];
-          const baseMin = v.cal_min ?? 0;
-          const baseMax = v.cal_max ?? 1;
-          const baseWidth = Math.max(1e-6, baseMax - baseMin);
-          baseWindowRef.current = {
-            min: baseMin,
-            max: baseMax,
-            width: baseWidth,
-          };
-          // Use default initial values without capturing state in this effect
-          applyWindow(50, 0);
+          const baseMin = Number.isFinite(v.cal_min) ? v.cal_min : 0;
+          const baseMax = Number.isFinite(v.cal_max) ? v.cal_max : 1;
+          initialWindowRef.current = { min: baseMin, max: baseMax };
+          setWindowMin(baseMin);
+          setWindowMax(baseMax);
+          applyWindow(baseMin, baseMax);
         }
       })
       .catch((err) => console.error("Failed to load image:", err));
@@ -61,12 +63,14 @@ const NiivueViewer = ({ image }) => {
   }, [image]);
 
   useEffect(() => {
-    applyWindow(brightness, contrast);
-  }, [brightness, contrast]);
+    if (windowMin === null || windowMax === null) return;
+    applyWindow(windowMin, windowMax);
+  }, [windowMin, windowMax]);
 
   const resetSettings = () => {
-    setBrightness(50);
-    setContrast(0);
+    const { min, max } = initialWindowRef.current;
+    setWindowMin(min);
+    setWindowMax(max);
   };
 
   return (
@@ -79,28 +83,52 @@ const NiivueViewer = ({ image }) => {
       </div>
       <div className="w-full md:w-[280px] flex-shrink-0 bg-indigo-50 rounded-xl p-4 flex flex-col justify-center items-center">
         <div className="space-y-8 w-full max-w-[240px]">
-          {[
-            ["Brightness", brightness, setBrightness],
-            ["Contrast", contrast, setContrast],
-          ].map(([label, value, setValue], idx) => (
-            <div
-              key={idx}
-              className="flex flex-col items-center bg-white p-4 rounded-xl shadow hover:shadow-md transition-transform hover:scale-105"
-            >
-              <label className="text-sm font-medium text-gray-700 mb-1">
-                {label}
-              </label>
-              <span className="text-xs text-gray-500 mb-2">{value}%</span>
-              <input
-                type="range"
-                min="0"
-                max="100"
-                value={value}
-                onChange={(e) => setValue(Number(e.target.value))}
-                className="w-full accent-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-300 rounded-md"
-              />
-            </div>
-          ))}
+          {(() => {
+            const sliderMin = initialWindowRef.current.min ?? 0;
+            const sliderMax = initialWindowRef.current.max ?? 1;
+            const epsilon = 1e-6;
+            const range = Math.max(epsilon, sliderMax - sliderMin);
+            const step = range / 500; 
+
+            return (
+              <>
+                <div className="flex flex-col items-center bg-white p-4 rounded-xl shadow hover:shadow-md transition-transform hover:scale-105">
+                  <label className="text-sm font-medium text-gray-700 mb-1">Window Min</label>
+                  <span className="text-xs text-gray-500 mb-2">{formatNumber(windowMin)}</span>
+                  <input
+                    type="range"
+                    min={sliderMin}
+                    max={sliderMax}
+                    step={step}
+                    value={Number.isFinite(windowMin) ? windowMin : sliderMin}
+                    onChange={(e) => {
+                      const val = parseFloat(e.target.value);
+                      const clamped = Math.min(val, (Number.isFinite(windowMax) ? windowMax : sliderMax) - epsilon);
+                      setWindowMin(clamped);
+                    }}
+                    className="w-full accent-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-300 rounded-md"
+                  />
+                </div>
+                <div className="flex flex-col items-center bg-white p-4 rounded-xl shadow hover:shadow-md transition-transform hover:scale-105">
+                  <label className="text-sm font-medium text-gray-700 mb-1">Window Max</label>
+                  <span className="text-xs text-gray-500 mb-2">{formatNumber(windowMax)}</span>
+                  <input
+                    type="range"
+                    min={sliderMin}
+                    max={sliderMax}
+                    step={step}
+                    value={Number.isFinite(windowMax) ? windowMax : sliderMax}
+                    onChange={(e) => {
+                      const val = parseFloat(e.target.value);
+                      const clamped = Math.max(val, (Number.isFinite(windowMin) ? windowMin : sliderMin) + epsilon);
+                      setWindowMax(clamped);
+                    }}
+                    className="w-full accent-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-300 rounded-md"
+                  />
+                </div>
+              </>
+            );
+          })()}
           <button
             onClick={resetSettings}
             className="w-full text-sm mt-4 bg-indigo-100 text-indigo-600 font-medium py-2 rounded-md hover:bg-indigo-200 transition-colors"
