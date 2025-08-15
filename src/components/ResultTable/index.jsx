@@ -1,10 +1,11 @@
-import React, { memo, useState } from "react";
+import { memo, useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import useProcessedData from "../../hooks/useProcessedData";
 import ErrorMessage from "../ErrorMessage";
-import LoadingMessage from "../LoadingMessage";
+import LoadingSpinner from "../LoadingSpinner";
 import TableHeader from "./TableHeader";
 import TableBody from "./TableBody";
+import TableSearch from "./TableSearch";
 
 const tableClasses = {
   container: "px-2 mx-4 pb-1 overflow-x-auto",
@@ -19,6 +20,7 @@ const ResultTable = () => {
     direction: null,
   });
   const [isSorting, setIsSorting] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
 
   const handleMetricClick = (metric) => {
@@ -43,10 +45,20 @@ const ResultTable = () => {
     setTimeout(() => setIsSorting(false), 100);
   };
 
-  const sortedData = React.useMemo(() => {
-    if (!sortConfig.key) return [...data];
+  // Filter data based on search term
+  const filteredData = useMemo(() => {
+    if (!searchTerm.trim()) return data;
+    
+    return data.filter((item) =>
+      item.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }, [data, searchTerm]);
 
-    return [...data].sort((a, b) => {
+  // Sort filtered data
+  const sortedData = useMemo(() => {
+    if (!sortConfig.key) return [...filteredData];
+
+    return [...filteredData].sort((a, b) => {
       const valueA = a[sortConfig.key];
       const valueB = b[sortConfig.key];
 
@@ -61,21 +73,43 @@ const ResultTable = () => {
       }
       return 0;
     });
-  }, [data, sortConfig]);
+  }, [filteredData, sortConfig]);
 
   if (error) return <ErrorMessage message={error.message} />;
-  if (loading) return <LoadingMessage />;
+  if (loading) return <LoadingSpinner message="Loading results" description="Fetching algorithm data..." />;
 
   return (
-    <div className={tableClasses.container}>
-      <table className={tableClasses.table}>
-        <TableHeader
-          sortConfig={sortConfig}
-          requestSort={requestSort}
-          onMetricClick={handleMetricClick}
-        />
-        <TableBody data={sortedData} navigate={navigate} />
-      </table>
+    <div className="px-2 mx-4 pb-1 space-y-4">
+      <TableSearch 
+        searchTerm={searchTerm}
+        onSearchChange={setSearchTerm}
+        placeholder="Search algorithms by name..."
+      />
+      <div className="overflow-x-auto">
+        <div className="bg-white rounded-lg shadow-md border border-indigo-100 overflow-hidden">
+          <table className="min-w-full border-collapse">
+            <TableHeader
+              sortConfig={sortConfig}
+              requestSort={requestSort}
+              onMetricClick={handleMetricClick}
+            />
+            <TableBody data={sortedData} navigate={navigate} />
+          </table>
+          {sortedData.length === 0 && searchTerm && (
+            <div className="text-center py-8 px-4">
+              <p className="text-stone-600 font-radio">
+                No algorithms found matching "{searchTerm}"
+              </p>
+              <button
+                onClick={() => setSearchTerm("")}
+                className="mt-2 text-indigo-400 hover:text-indigo-600 font-radio text-sm cursor-pointer"
+              >
+                Clear search
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 };

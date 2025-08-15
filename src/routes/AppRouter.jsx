@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import { lazy, Suspense } from "react";
-import LoadingMessage from "../components/LoadingMessage";
+import PageLoadingFallback from "../components/PageLoadingFallback";
 import Home from "../pages/Home";
 import Overview from "../pages/Overview";
 import Images from "../pages/Images";
@@ -17,13 +17,20 @@ const AppRouter = () => {
       <Route path="/" element={<Home />} />
       <Route path="/overview" element={<Overview />} />
       <Route path="/images" element={<Images />} />
-      <Route 
-        path="/compare" 
+      <Route
+        path="/compare"
         element={
-          <Suspense fallback={<LoadingMessage />}>
+          <Suspense
+            fallback={
+              <PageLoadingFallback
+                message="Loading Comparison"
+                description="Preparing algorithm comparison interface..."
+              />
+            }
+          >
             <Compare />
           </Suspense>
-        } 
+        }
       />
       <Route path="/metric" element={<Metric />} />
       <Route path="/algorithm" element={<Algorithm />} />

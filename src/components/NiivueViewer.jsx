@@ -18,8 +18,12 @@ const NiivueViewer = ({ image }) => {
     if (!nv || !nv.volumes || !nv.volumes[0]) return;
 
     const epsilon = 1e-6;
-    let newMin = Number.isFinite(minVal) ? minVal : initialWindowRef.current.min;
-    let newMax = Number.isFinite(maxVal) ? maxVal : initialWindowRef.current.max;
+    let newMin = Number.isFinite(minVal)
+      ? minVal
+      : initialWindowRef.current.min;
+    let newMax = Number.isFinite(maxVal)
+      ? maxVal
+      : initialWindowRef.current.max;
 
     if (newMax - newMin < epsilon) {
       newMax = newMin + epsilon;
@@ -45,8 +49,7 @@ const NiivueViewer = ({ image }) => {
     nvRef.current = nv;
     nv.attachToCanvas(canvasRef.current);
 
-    nv
-      .loadVolumes([{ url: image }])
+    nv.loadVolumes([{ url: image }])
       .then(() => {
         nv.setSliceType(nv.sliceTypeMultiplanar);
 
@@ -68,7 +71,7 @@ const NiivueViewer = ({ image }) => {
       });
 
     return () => {
-      if (nvRef.current && typeof nvRef.current.destroy === 'function') {
+      if (nvRef.current && typeof nvRef.current.destroy === "function") {
         nvRef.current.destroy();
       }
       nvRef.current = null;
@@ -91,12 +94,27 @@ const NiivueViewer = ({ image }) => {
       <div className="max-w-screen-xl mx-auto px-4 flex items-center justify-center">
         <div className="text-center p-8 bg-red-50 border border-red-200 rounded-xl">
           <div className="text-red-600 mb-2">
-            <svg className="w-12 h-12 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            <svg
+              className="w-12 h-12 mx-auto mb-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
             </svg>
           </div>
-          <h3 className="text-lg font-medium text-red-800 mb-2">Failed to Load Image</h3>
-          <p className="text-red-600 text-sm">Unable to load the medical image. Please try selecting a different algorithm.</p>
+          <h3 className="text-lg font-medium text-red-800 mb-2">
+            Failed to Load Image
+          </h3>
+          <p className="text-red-600 text-sm">
+            Unable to load the medical image. Please try selecting a different
+            algorithm.
+          </p>
         </div>
       </div>
     );
@@ -125,13 +143,17 @@ const NiivueViewer = ({ image }) => {
             const sliderMax = initialWindowRef.current.max ?? 1;
             const epsilon = 1e-6;
             const range = Math.max(epsilon, sliderMax - sliderMin);
-            const step = range / 500; 
+            const step = range / 500;
 
             return (
               <>
                 <div className="flex flex-col items-center bg-white p-4 rounded-xl shadow hover:shadow-md transition-transform hover:scale-105">
-                  <label className="text-sm font-medium text-gray-700 mb-1">Window Min</label>
-                  <span className="text-xs text-gray-500 mb-2">{formatNumber(windowMin)}</span>
+                  <label className="text-sm font-medium text-gray-700 mb-1">
+                    Window Min
+                  </label>
+                  <span className="text-xs text-gray-500 mb-2">
+                    {formatNumber(windowMin)}
+                  </span>
                   <input
                     type="range"
                     min={sliderMin}
@@ -140,15 +162,23 @@ const NiivueViewer = ({ image }) => {
                     value={Number.isFinite(windowMin) ? windowMin : sliderMin}
                     onChange={(e) => {
                       const val = parseFloat(e.target.value);
-                      const clamped = Math.min(val, (Number.isFinite(windowMax) ? windowMax : sliderMax) - epsilon);
+                      const clamped = Math.min(
+                        val,
+                        (Number.isFinite(windowMax) ? windowMax : sliderMax) -
+                          epsilon
+                      );
                       setWindowMin(clamped);
                     }}
                     className="w-full accent-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-300 rounded-md"
                   />
                 </div>
                 <div className="flex flex-col items-center bg-white p-4 rounded-xl shadow hover:shadow-md transition-transform hover:scale-105">
-                  <label className="text-sm font-medium text-gray-700 mb-1">Window Max</label>
-                  <span className="text-xs text-gray-500 mb-2">{formatNumber(windowMax)}</span>
+                  <label className="text-sm font-medium text-gray-700 mb-1">
+                    Window Max
+                  </label>
+                  <span className="text-xs text-gray-500 mb-2">
+                    {formatNumber(windowMax)}
+                  </span>
                   <input
                     type="range"
                     min={sliderMin}
@@ -157,7 +187,11 @@ const NiivueViewer = ({ image }) => {
                     value={Number.isFinite(windowMax) ? windowMax : sliderMax}
                     onChange={(e) => {
                       const val = parseFloat(e.target.value);
-                      const clamped = Math.max(val, (Number.isFinite(windowMin) ? windowMin : sliderMin) + epsilon);
+                      const clamped = Math.max(
+                        val,
+                        (Number.isFinite(windowMin) ? windowMin : sliderMin) +
+                          epsilon
+                      );
                       setWindowMax(clamped);
                     }}
                     className="w-full accent-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-300 rounded-md"

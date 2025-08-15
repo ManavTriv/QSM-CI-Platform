@@ -1,4 +1,3 @@
-import React from "react";
 import { Info, FileText, BarChart } from "lucide-react";
 import metricDescriptions from "../data/metricDescriptions";
 
@@ -8,30 +7,68 @@ const MetricOverview = ({ metric }) => {
     "No description is available for this metric.";
 
   return (
-    <div className="px-2 mx-4 overflow-x-auto space-y-3">
-      <h1 className="font-radio text-indigo-400 font-semibold">
-        Metric Overview
-      </h1>
-
-      <div className="text-[0.9375rem] text-gray-800 font-radio space-y-3">
-        <div className="flex items-start gap-2">
-          <Info className="mt-1 h-4 w-4 text-indigo-400" />
-          <span>
-            This is a <span className="font-medium">metric overview</span> for{" "}
-            <span className="font-medium">{metric}</span>.
-          </span>
+    <div>
+      <div className="bg-white rounded-2xl shadow-md border border-indigo-100 p-6 font-radio">
+        <div className="flex items-center mb-4">
+          <div className="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center mr-3">
+            <BarChart className="w-5 h-5 text-indigo-600" />
+          </div>
+          <div>
+            <h1 className="text-2xl font-bold text-stone-800">
+              {metric} Analysis
+            </h1>
+            <p className="text-sm text-stone-600">
+              Metric overview and performance insights
+            </p>
+          </div>
         </div>
 
-        <div className="flex items-start gap-2">
-          <FileText className="mt-1 h-4 w-4 text-indigo-400" />
-          <span>{description}</span>
-        </div>
+        <div className="space-y-4">
+          <div className="bg-indigo-50 rounded-lg p-4">
+            <div className="flex items-start gap-3">
+              <Info className="mt-0.5 h-5 w-5 text-indigo-600 flex-shrink-0" />
+              <div>
+                <h3 className="font-semibold text-stone-800 mb-1">
+                  About {metric}
+                </h3>
+                <p className="text-sm text-stone-700 leading-relaxed">
+                  {description}
+                </p>
+              </div>
+            </div>
+          </div>
 
-        <div className="flex items-start gap-2">
-          <BarChart className="mt-1 h-4 w-4 text-indigo-400" />
-          <span>
-            Below is a plot comparing this metric across all algorithms.
-          </span>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="bg-gray-50 rounded-lg p-4">
+              <div className="flex items-start gap-3">
+                <FileText className="mt-0.5 h-5 w-5 text-stone-600 flex-shrink-0" />
+                <div>
+                  <h3 className="font-semibold text-stone-800 mb-1">
+                    Measurement
+                  </h3>
+                  <p className="text-sm text-stone-600">
+                    Quantifies algorithm performance using standardized
+                    evaluation criteria
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-gray-50 rounded-lg p-4">
+              <div className="flex items-start gap-3">
+                <BarChart className="mt-0.5 h-5 w-5 text-stone-600 flex-shrink-0" />
+                <div>
+                  <h3 className="font-semibold text-stone-800 mb-1">
+                    Visualization
+                  </h3>
+                  <p className="text-sm text-stone-600">
+                    Interactive scatter plot comparing performance across all
+                    algorithms
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

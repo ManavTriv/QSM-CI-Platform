@@ -1,4 +1,3 @@
-import React from "react";
 import { Users, TrendingUp, Eye } from "lucide-react";
 
 const CompareMessage = () => {
@@ -7,7 +6,7 @@ const CompareMessage = () => {
       <h1 className="font-radio text-indigo-400 font-semibold">
         ELO Ranking System
       </h1>
-      <div className="text-[0.9375rem] text-gray-800 font-radio space-y-3">
+      <div className="text-sm text-stone-800 font-radio space-y-3">
         <div className="flex items-start gap-2">
           <Users className="mt-1 h-4 w-4 text-indigo-400" />
           <span>

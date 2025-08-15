@@ -1,10 +1,10 @@
-import React, { memo } from "react";
+import { memo } from "react";
 import SortIcon from "./SortIcon";
 
 const tableClasses = {
   thead: "bg-indigo-50",
-  th: "font-radio px-6 py-3 border-b border-indigo-200 text-left text-sm font-semibold uppercase tracking-wider text-stone-800",
-  sortableHeader: "flex items-center gap-2",
+  th: "font-radio px-3 sm:px-6 py-3 border-b border-indigo-200 text-left text-xs sm:text-sm font-semibold uppercase tracking-wider text-stone-800",
+  sortableHeader: "flex items-center gap-1 sm:gap-2",
   headerText: "hover:text-indigo-400 cursor-pointer",
   nonSortableHeader: "",
 };

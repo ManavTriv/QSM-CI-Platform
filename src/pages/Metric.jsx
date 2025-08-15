@@ -1,10 +1,10 @@
-import React, { lazy, Suspense } from "react";
+import { lazy, Suspense } from "react";
 import { useLocation } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import NavigateButton from "../components/NavigateButton";
 import useProcessedData from "../hooks/useProcessedData";
 import ErrorMessage from "../components/ErrorMessage";
-import LoadingMessage from "../components/LoadingMessage";
+import LoadingSpinner from "../components/LoadingSpinner";
 import MetricOverview from "../components/MetricOverview";
 import { BarChart } from "lucide-react";
 
@@ -17,17 +17,30 @@ const MetricContent = () => {
   const metric = searchParams.get("metric");
   const { data, error, loading } = useProcessedData();
 
-  if (error) return <ErrorMessage message={"Error loading data"} />;
-  if (loading) return <LoadingMessage />;
-  if (!metric) return <ErrorMessage message={"No metric selected"} />;
+  if (error) return <ErrorMessage message="Error loading data" />;
+  if (loading)
+    return (
+      <LoadingSpinner
+        message="Loading metric data"
+        description="Fetching metric information..."
+      />
+    );
+  if (!metric) return <ErrorMessage message="No metric selected" />;
 
   return (
-    <div className="space-y-5">
-      <div className="px-2 mx-4">
+    <div className="max-w-7xl mx-auto px-6 space-y-8">
+      <div>
         <NavigateButton to="/overview" label="OVERVIEW" icon={BarChart} />
       </div>
       <MetricOverview metric={metric} />
-      <Suspense fallback={<LoadingMessage />}>
+      <Suspense
+        fallback={
+          <LoadingSpinner
+            message="Loading chart"
+            description="Rendering visualization..."
+          />
+        }
+      >
         <DotPlot data={data} metric={metric} />
       </Suspense>
     </div>
@@ -36,9 +49,11 @@ const MetricContent = () => {
 
 const Metric = () => {
   return (
-    <div className="bg-[#fffefb] min-h-screen w-full space-y-5">
+    <div className="bg-[#fffefb] min-h-screen w-full">
       <Navbar />
-      <MetricContent />
+      <div className="py-6">
+        <MetricContent />
+      </div>
     </div>
   );
 };

@@ -6,7 +6,7 @@ const useEloUpdater = () => {
     try {
       // Initialize Parse on first data interaction (lowers npm bundle size)
       const Parse = initializeParse();
-      
+
       await ensureAnonymousUser();
 
       const ImageClass = Parse.Object.extend("Images");

@@ -1,8 +1,7 @@
-import React from "react";
 import { useLocation } from "react-router-dom";
 import useProcessedData from "../hooks/useProcessedData";
 import ErrorMessage from "../components/ErrorMessage";
-import LoadingMessage from "../components/LoadingMessage";
+import LoadingSpinner from "../components/LoadingSpinner";
 import Navbar from "../components/Navbar";
 import NavigateButton from "../components/NavigateButton";
 import algorithmInfo from "../data/algorithmInfo";
@@ -13,9 +12,15 @@ const AlgorithmContent = () => {
   const algorithmName = searchParams.get("name");
   const { data, error, loading } = useProcessedData();
 
-  if (error) return <ErrorMessage message={"Error loading data"} />;
-  if (loading) return <LoadingMessage />;
-  if (!algorithmName) return <ErrorMessage message={"No algorithm selected"} />;
+  if (error) return <ErrorMessage message="Error loading data" />;
+  if (loading)
+    return (
+      <LoadingSpinner
+        message="Loading algorithm data"
+        description="Fetching algorithm information..."
+      />
+    );
+  if (!algorithmName) return <ErrorMessage message="No algorithm selected" />;
 
   const algorithmData = data.find((item) => item.name === algorithmName);
   if (!algorithmData)

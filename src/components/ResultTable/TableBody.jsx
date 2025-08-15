@@ -1,9 +1,9 @@
-import React, { memo } from "react";
+import { memo } from "react";
 
 const tableClasses = {
   tbody: "divide-y divide-indigo-100",
   tr: "hover:bg-indigo-50 transition-colors duration-75",
-  td: "font-radio px-6 py-4 text-sm text-stone-800 border-b border-indigo-100",
+  td: "font-radio px-3 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm text-stone-800 border-b border-indigo-100",
 };
 
 const TableBody = memo(({ data, navigate }) => (
@@ -35,7 +35,9 @@ const TableBody = memo(({ data, navigate }) => (
           "GXE",
         ].map((metric) => (
           <td key={metric} className={tableClasses.td}>
-            {typeof entry[metric] === 'number' ? entry[metric].toFixed(3) : "N/A"}
+            {typeof entry[metric] === "number"
+              ? entry[metric].toFixed(3)
+              : "N/A"}
           </td>
         ))}
       </tr>

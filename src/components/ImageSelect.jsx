@@ -1,8 +1,8 @@
 import { useMemo, useRef, useState, useEffect } from "react";
 import useProcessedData from "../hooks/useProcessedData";
 import ErrorMessage from "./ErrorMessage";
-import LoadingMessage from "./LoadingMessage";
-import { ChevronDown, XCircle } from "lucide-react";
+import LoadingSpinner from "./LoadingSpinner";
+import { ChevronDown, XCircle, Search, X } from "lucide-react";
 
 const ImageSelect = ({ setImage }) => {
   const [selectedUrl, setSelectedUrl] = useState(null);
@@ -53,7 +53,13 @@ const ImageSelect = ({ setImage }) => {
   const toggleDropdown = () => setIsOpen((prev) => !prev);
 
   if (error) return <ErrorMessage message={error.message} />;
-  if (loading) return <LoadingMessage />;
+  if (loading)
+    return (
+      <LoadingSpinner
+        message="Loading algorithms"
+        description="Fetching available algorithms..."
+      />
+    );
 
   return (
     <div className="relative w-full px-6">
@@ -91,14 +97,26 @@ const ImageSelect = ({ setImage }) => {
           style={{ width: dropdownWidth }}
         >
           <div className="sticky top-0 bg-white p-2 border-b border-gray-200 z-10">
-            <input
-              type="text"
-              placeholder="Search algorithms..."
-              className="w-full px-3 py-2 text-sm rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              autoFocus
-            />
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-stone-400" />
+              <input
+                type="text"
+                placeholder="Search algorithms..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full pl-10 pr-10 py-2 text-sm font-radio border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent"
+                autoFocus
+              />
+              {searchTerm && (
+                <button
+                  onClick={() => setSearchTerm("")}
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-stone-400 hover:text-stone-600 cursor-pointer"
+                  title="Clear search"
+                >
+                  <X size={16} />
+                </button>
+              )}
+            </div>
           </div>
 
           {filteredData.length > 0 ? (
@@ -119,8 +137,16 @@ const ImageSelect = ({ setImage }) => {
               ))}
             </ul>
           ) : (
-            <div className="p-4 text-center text-sm text-gray-500 font-radio">
-              No algorithms found.
+            <div className="p-4 text-center text-sm text-stone-600 font-radio">
+              <p className="mb-2">
+                No algorithms found matching "{searchTerm}"
+              </p>
+              <button
+                onClick={() => setSearchTerm("")}
+                className="text-indigo-400 hover:text-indigo-600 font-radio text-sm cursor-pointer"
+              >
+                Clear search
+              </button>
             </div>
           )}
         </div>

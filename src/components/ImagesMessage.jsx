@@ -1,5 +1,3 @@
-// /components/ImagesMessage.jsx
-import React from "react";
 import { ChevronDown, RotateCw, SlidersHorizontal } from "lucide-react";
 
 const ImagesMessage = () => {
@@ -8,7 +6,7 @@ const ImagesMessage = () => {
       <h1 className="font-radio text-indigo-400 font-semibold">
         QSM Medical Image Viewer
       </h1>
-      <div className="space-y-3 text-[0.9375rem] text-gray-800 font-radio">
+      <div className="space-y-3 text-[0.9375rem] text-stone-800 font-radio">
         <div className="flex items-start gap-2">
           <ChevronDown className="mt-1 h-4 w-4 text-indigo-400" />
           <span>
