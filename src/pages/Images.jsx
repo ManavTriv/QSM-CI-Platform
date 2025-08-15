@@ -1,8 +1,11 @@
-import { useState } from "react";
+import { useState, lazy, Suspense } from "react";
 import Navbar from "../components/Navbar";
 import ImagesMessage from "../components/ImagesMessage";
 import ImageSelect from "../components/ImageSelect";
-import NiivueViewer from "../components/NiivueViewer";
+import LoadingMessage from "../components/LoadingMessage";
+
+// Lazy load the heavy 3D viewer component (lowers npm bundle size)
+const NiivueViewer = lazy(() => import("../components/NiivueViewer"));
 
 const Images = () => {
   const [image, setImage] = useState(null);
@@ -16,7 +19,11 @@ const Images = () => {
       <Navbar />
       <ImagesMessage />
       <ImageSelect setImage={updateImage} />
-      {image && <NiivueViewer image={image} />}
+      {image && (
+        <Suspense fallback={<LoadingMessage />}>
+          <NiivueViewer image={image} />
+        </Suspense>
+      )}
     </div>
   );
 };

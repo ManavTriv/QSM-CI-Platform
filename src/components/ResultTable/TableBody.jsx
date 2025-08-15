@@ -11,14 +11,16 @@ const TableBody = memo(({ data, navigate }) => (
     {data.map((entry) => (
       <tr key={entry.id} className={tableClasses.tr}>
         <td className={`${tableClasses.td} font-medium`}>
-          <span
-            className="hover:text-indigo-400 cursor-pointer"
+          <button
+            type="button"
+            className="hover:text-indigo-400 cursor-pointer text-left underline-offset-2 hover:underline focus:outline-none focus:underline"
             onClick={() =>
               navigate(`/algorithm?name=${encodeURIComponent(entry.name)}`)
             }
+            aria-label={`View details for ${entry.name}`}
           >
             {entry.name}
-          </span>
+          </button>
         </td>
         {[
           "Elo",
@@ -33,7 +35,7 @@ const TableBody = memo(({ data, navigate }) => (
           "GXE",
         ].map((metric) => (
           <td key={metric} className={tableClasses.td}>
-            {entry[metric]?.toFixed(3) || "N/A"}
+            {typeof entry[metric] === 'number' ? entry[metric].toFixed(3) : "N/A"}
           </td>
         ))}
       </tr>

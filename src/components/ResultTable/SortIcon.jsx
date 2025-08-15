@@ -11,8 +11,8 @@ const SortIcon = ({ direction }) => {
     className: tableClasses.sortIcon,
   };
 
-  if (direction === "asc") return <ChevronUp {...iconProps} />;
-  if (direction === "desc") return <ChevronDown {...iconProps} />;
+  if (direction === "high-to-low") return <ChevronDown {...iconProps} />;
+  if (direction === "low-to-high") return <ChevronUp {...iconProps} />;
   return <ChevronsUpDown {...iconProps} />;
 };
 

@@ -29,11 +29,11 @@ const ResultTable = () => {
     if (isSorting) return;
 
     setIsSorting(true);
-    let direction = "asc";
+    let direction = "high-to-low"; 
     if (sortConfig.key === key) {
-      if (sortConfig.direction === "asc") {
-        direction = "desc";
-      } else if (sortConfig.direction === "desc") {
+      if (sortConfig.direction === "high-to-low") {
+        direction = "low-to-high";
+      } else if (sortConfig.direction === "low-to-high") {
         direction = null;
         key = null;
       }
@@ -54,10 +54,10 @@ const ResultTable = () => {
       if (valueB == null) return -1;
 
       if (valueA > valueB) {
-        return sortConfig.direction === "asc" ? -1 : 1;
+        return sortConfig.direction === "high-to-low" ? -1 : 1;
       }
       if (valueA < valueB) {
-        return sortConfig.direction === "asc" ? 1 : -1;
+        return sortConfig.direction === "high-to-low" ? 1 : -1;
       }
       return 0;
     });

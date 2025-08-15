@@ -8,6 +8,8 @@ const NiivueViewer = ({ image }) => {
 
   const [windowMin, setWindowMin] = useState(null);
   const [windowMax, setWindowMax] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [hasError, setHasError] = useState(false);
 
   const formatNumber = (n) => (Number.isFinite(n) ? n.toFixed(3) : "");
 
@@ -29,6 +31,9 @@ const NiivueViewer = ({ image }) => {
   };
 
   useEffect(() => {
+    setIsLoading(true);
+    setHasError(false);
+
     const nv = new Niivue({
       loadingText: "Loading",
       dragAndDropEnabled: true,
@@ -53,11 +58,19 @@ const NiivueViewer = ({ image }) => {
           setWindowMin(baseMin);
           setWindowMax(baseMax);
           applyWindow(baseMin, baseMax);
+          setIsLoading(false);
         }
       })
-      .catch((err) => console.error("Failed to load image:", err));
+      .catch((err) => {
+        console.error("Failed to load image:", err);
+        setHasError(true);
+        setIsLoading(false);
+      });
 
     return () => {
+      if (nvRef.current && typeof nvRef.current.destroy === 'function') {
+        nvRef.current.destroy();
+      }
       nvRef.current = null;
     };
   }, [image]);
@@ -73,9 +86,33 @@ const NiivueViewer = ({ image }) => {
     setWindowMax(max);
   };
 
+  if (hasError) {
+    return (
+      <div className="max-w-screen-xl mx-auto px-4 flex items-center justify-center">
+        <div className="text-center p-8 bg-red-50 border border-red-200 rounded-xl">
+          <div className="text-red-600 mb-2">
+            <svg className="w-12 h-12 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <h3 className="text-lg font-medium text-red-800 mb-2">Failed to Load Image</h3>
+          <p className="text-red-600 text-sm">Unable to load the medical image. Please try selecting a different algorithm.</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="max-w-screen-xl mx-auto px-4 flex flex-col md:flex-row gap-6">
-      <div className="flex-1 min-w-0 border border-indigo-300 rounded-xl overflow-hidden aspect-[2.5/1]">
+      <div className="flex-1 min-w-0 border border-indigo-300 rounded-xl overflow-hidden aspect-[2.5/1] relative">
+        {isLoading && (
+          <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
+            <div className="text-center">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-500 mx-auto mb-2"></div>
+              <p className="text-gray-600 text-sm">Loading image...</p>
+            </div>
+          </div>
+        )}
         <canvas
           ref={canvasRef}
           className="block w-full h-full object-contain"

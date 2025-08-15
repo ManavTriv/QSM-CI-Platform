@@ -1,13 +1,15 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import { useLocation } from "react-router-dom";
 import Navbar from "../components/Navbar";
-import DotPlot from "../components/DotPlot";
 import NavigateButton from "../components/NavigateButton";
 import useProcessedData from "../hooks/useProcessedData";
 import ErrorMessage from "../components/ErrorMessage";
 import LoadingMessage from "../components/LoadingMessage";
 import MetricOverview from "../components/MetricOverview";
 import { BarChart } from "lucide-react";
+
+// Lazy load heavy chart component (lowers npm bundle size)
+const DotPlot = lazy(() => import("../components/DotPlot"));
 
 const MetricContent = () => {
   const location = useLocation();
@@ -25,7 +27,9 @@ const MetricContent = () => {
         <NavigateButton to="/overview" label="OVERVIEW" icon={BarChart} />
       </div>
       <MetricOverview metric={metric} />
-      <DotPlot data={data} metric={metric} />
+      <Suspense fallback={<LoadingMessage />}>
+        <DotPlot data={data} metric={metric} />
+      </Suspense>
     </div>
   );
 };

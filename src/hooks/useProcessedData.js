@@ -10,12 +10,19 @@ const useProcessedData = () => {
     fetchData()
       .then((fetchedData) => {
         const processedData = fetchedData.map((entry) => {
-          const fileName = new URL(entry.url).pathname.split("/").pop();
-          const name = fileName
-            .replace(/\.[^/.]+$/, "")
-            .replace(/_/g, " ")
-            .toUpperCase();
-          return { ...entry, name };
+          try {
+            const fileName = new URL(entry.url).pathname.split("/").pop();
+            const name = decodeURIComponent(fileName)
+              .replace(/\.[^/.]+$/, "")
+              .replace(/_/g, " ")
+              .toUpperCase();
+            return { ...entry, name };
+          } catch (urlError) {
+            console.warn("Invalid URL for entry:", entry.url, urlError);
+            // Fallback to objectId or a safe default name
+            const fallbackName = entry.objectId || "Unknown Algorithm";
+            return { ...entry, name: fallbackName };
+          }
         });
         setData(processedData);
       })

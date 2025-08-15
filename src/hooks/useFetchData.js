@@ -1,6 +1,9 @@
-import Parse from "../api/parseConfig";
+import { initializeParse } from "../api/parseConfig";
 
 const fetchData = async () => {
+  // Initialize Parse on first data interaction (lowers npm bundle size)
+  const Parse = initializeParse();
+  
   const ImageClass = Parse.Object.extend("Images");
   const query = new Parse.Query(ImageClass);
 
@@ -12,7 +15,7 @@ const fetchData = async () => {
     }));
   } catch (error) {
     console.error("Error fetching images:", error);
-    return [];
+    throw error; // Re-throw to allow useProcessedData to handle it properly
   }
 };
 

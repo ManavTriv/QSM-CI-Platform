@@ -4,3 +4,7 @@
 @theme {
   --font-radio: "Radio Canada", sans-serif;
 }
+
+.font-radio {
+  font-family: var(--font-radio);
+}
