@@ -5,7 +5,11 @@ const Home = () => {
   return (
     <div className="bg-[#fffefb] min-h-screen w-full">
       <Navbar />
-      <HomeMessage />
+      <div className="py-6">
+        <div className="max-w-7xl mx-auto px-6">
+          <HomeMessage />
+        </div>
+      </div>
     </div>
   );
 };

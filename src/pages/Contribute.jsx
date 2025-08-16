@@ -5,7 +5,11 @@ const Contribute = () => {
   return (
     <div className="bg-[#fffefb] min-h-screen w-full">
       <Navbar />
-      <ContributeMessage />
+      <div className="py-6">
+        <div className="max-w-7xl mx-auto px-6">
+          <ContributeMessage />
+        </div>
+      </div>
     </div>
   );
 };

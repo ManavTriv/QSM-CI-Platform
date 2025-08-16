@@ -2,7 +2,7 @@ import { Table, BarChart2, Info } from "lucide-react";
 
 const OverviewMessage = () => {
   return (
-    <div className="px-2 mx-4 overflow-x-auto space-y-3">
+    <div className="space-y-3">
       <h1 className="font-radio text-indigo-400 font-semibold">
         Algorithm and Metric Overview
       </h1>

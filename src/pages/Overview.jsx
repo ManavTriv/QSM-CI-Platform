@@ -4,10 +4,14 @@ import OverviewMessage from "../components/OverviewMessage";
 
 const Overview = () => {
   return (
-    <div className="bg-[#fffefb] min-h-screen w-full space-y-5">
+    <div className="bg-[#fffefb] min-h-screen w-full">
       <Navbar />
-      <OverviewMessage />
-      <ResultTable />
+      <div className="py-6">
+        <div className="max-w-7xl mx-auto px-6 space-y-8">
+          <OverviewMessage />
+          <ResultTable />
+        </div>
+      </div>
     </div>
   );
 };

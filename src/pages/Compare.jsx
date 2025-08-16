@@ -12,7 +12,11 @@ const Compare = () => {
     return (
       <div className="bg-[#fffefb] min-h-screen w-full">
         <Navbar />
-        <ErrorMessage message="Error loading data" />
+        <div className="py-6">
+          <div className="max-w-7xl mx-auto px-6">
+            <ErrorMessage message="Error loading data" />
+          </div>
+        </div>
       </div>
     );
   }
@@ -21,10 +25,14 @@ const Compare = () => {
     return (
       <div className="bg-[#fffefb] min-h-screen w-full">
         <Navbar />
-        <LoadingSpinner
-          message="Loading comparison data"
-          description="Preparing algorithm comparison..."
-        />
+        <div className="py-6">
+          <div className="max-w-7xl mx-auto px-6">
+            <LoadingSpinner
+              message="Loading comparison data"
+              description="Preparing algorithm comparison..."
+            />
+          </div>
+        </div>
       </div>
     );
   }
@@ -32,9 +40,11 @@ const Compare = () => {
   return (
     <div className="bg-[#fffefb] min-h-screen w-full">
       <Navbar />
-      <div className="space-y-5 mt-5">
-        <CompareMessage />
-        <AlgorithmComparison data={data} />
+      <div className="py-6">
+        <div className="max-w-7xl mx-auto px-6 space-y-8">
+          <CompareMessage />
+          <AlgorithmComparison data={data} />
+        </div>
       </div>
     </div>
   );

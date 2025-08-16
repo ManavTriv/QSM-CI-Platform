@@ -2,7 +2,7 @@ import { Users, TrendingUp, Eye } from "lucide-react";
 
 const CompareMessage = () => {
   return (
-    <div className="px-2 mx-4 overflow-x-auto space-y-3">
+    <div className="space-y-3">
       <h1 className="font-radio text-indigo-400 font-semibold">
         ELO Ranking System
       </h1>

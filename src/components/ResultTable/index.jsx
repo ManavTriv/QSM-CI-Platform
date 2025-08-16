@@ -8,7 +8,7 @@ import TableBody from "./TableBody";
 import TableSearch from "./TableSearch";
 
 const tableClasses = {
-  container: "px-2 mx-4 pb-1 overflow-x-auto",
+  container: "pb-1 overflow-x-auto",
   table:
     "min-w-full bg-white border border-indigo-100 shadow-md rounded-lg overflow-hidden border-collapse separate",
 };
@@ -79,7 +79,7 @@ const ResultTable = () => {
   if (loading) return <LoadingSpinner message="Loading results" description="Fetching algorithm data..." />;
 
   return (
-    <div className="px-2 mx-4 pb-1 space-y-4">
+    <div className="space-y-4">
       <TableSearch 
         searchTerm={searchTerm}
         onSearchChange={setSearchTerm}

@@ -29,11 +29,11 @@ const AlgorithmContent = () => {
   const { description, tags } = algorithmInfo[algorithmName] || {};
 
   return (
-    <div className="space-y-5">
-      <div className="px-2 mx-4">
+    <div className="space-y-8">
+      <div>
         <NavigateButton to="/" label="HOME" />
       </div>
-      <div className="px-2 mx-4 overflow-x-auto space-y-3">
+      <div className="space-y-3">
         <div className="space-y-1">
           <h1 className="font-radio text-indigo-400 font-semibold ">
             {algorithmName}
@@ -58,7 +58,7 @@ const AlgorithmContent = () => {
         )}
       </div>
       <div>
-        <div className="px-2 mx-4">[IMAGE OF ALGORITHM]</div>
+        <div>[IMAGE OF ALGORITHM]</div>
       </div>
     </div>
   );
@@ -66,9 +66,13 @@ const AlgorithmContent = () => {
 
 const Algorithm = () => {
   return (
-    <div className="bg-[#fffefb] min-h-screen w-full space-y-5">
+    <div className="bg-[#fffefb] min-h-screen w-full">
       <Navbar />
-      <AlgorithmContent />
+      <div className="py-6">
+        <div className="max-w-7xl mx-auto px-6">
+          <AlgorithmContent />
+        </div>
+      </div>
     </div>
   );
 };

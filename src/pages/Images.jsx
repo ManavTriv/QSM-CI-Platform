@@ -15,22 +15,26 @@ const Images = () => {
   };
 
   return (
-    <div className="bg-[#fffefb] min-h-screen w-full space-y-5">
+    <div className="bg-[#fffefb] min-h-screen w-full">
       <Navbar />
-      <ImagesMessage />
-      <ImageSelect setImage={updateImage} />
-      {image && (
-        <Suspense
-          fallback={
-            <LoadingSpinner
-              message="Loading 3D viewer"
-              description="Initializing medical image viewer..."
-            />
-          }
-        >
-          <NiivueViewer image={image} />
-        </Suspense>
-      )}
+      <div className="py-6">
+        <div className="max-w-7xl mx-auto px-6 space-y-8">
+          <ImagesMessage />
+          <ImageSelect setImage={updateImage} />
+          {image && (
+            <Suspense
+              fallback={
+                <LoadingSpinner
+                  message="Loading 3D viewer"
+                  description="Initializing medical image viewer..."
+                />
+              }
+            >
+              <NiivueViewer image={image} />
+            </Suspense>
+          )}
+        </div>
+      </div>
     </div>
   );
 };

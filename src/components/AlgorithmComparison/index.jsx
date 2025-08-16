@@ -47,7 +47,7 @@ const AlgorithmComparison = ({ data }) => {
   }
 
   return (
-    <div className="mt-8 flex flex-col items-center w-full max-w-screen-xl mx-auto px-4 bg-[#fffefb] pb-8 font-radio">
+    <div className="flex flex-col items-center w-full bg-[#fffefb] pb-8 font-radio">
       <ComparisonControls showNames={showNames} onNext={handleNext} />
 
       <div className="flex flex-col space-y-8 w-full">
