@@ -8,7 +8,6 @@ import AlgorithmNavigation from "./AlgorithmNavigation";
 import CurrentAlgorithmInfo from "./CurrentAlgorithmInfo";
 import ComparisonInstructions from "./ComparisonInstructions";
 
-// Lazy load the heavy 3D viewer component (lowers npm bundle size)
 const NiivueViewer = lazy(() => import("../NiivueViewer"));
 
 const AlgorithmComparison = ({ data }) => {

@@ -4,7 +4,6 @@ import ImagesMessage from "../components/ImagesMessage";
 import ImageSelect from "../components/ImageSelect";
 import LoadingSpinner from "../components/LoadingSpinner";
 
-// Lazy load the heavy 3D viewer component (lowers npm bundle size)
 const NiivueViewer = lazy(() => import("../components/NiivueViewer"));
 
 const Images = () => {

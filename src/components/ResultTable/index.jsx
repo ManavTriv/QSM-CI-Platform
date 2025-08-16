@@ -31,7 +31,7 @@ const ResultTable = () => {
     if (isSorting) return;
 
     setIsSorting(true);
-    let direction = "high-to-low"; 
+    let direction = "high-to-low";
     if (sortConfig.key === key) {
       if (sortConfig.direction === "high-to-low") {
         direction = "low-to-high";
@@ -45,16 +45,14 @@ const ResultTable = () => {
     setTimeout(() => setIsSorting(false), 100);
   };
 
-  // Filter data based on search term
   const filteredData = useMemo(() => {
     if (!searchTerm.trim()) return data;
-    
+
     return data.filter((item) =>
       item.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
   }, [data, searchTerm]);
 
-  // Sort filtered data
   const sortedData = useMemo(() => {
     if (!sortConfig.key) return [...filteredData];
 
@@ -76,11 +74,17 @@ const ResultTable = () => {
   }, [filteredData, sortConfig]);
 
   if (error) return <ErrorMessage message={error.message} />;
-  if (loading) return <LoadingSpinner message="Loading results" description="Fetching algorithm data..." />;
+  if (loading)
+    return (
+      <LoadingSpinner
+        message="Loading results"
+        description="Fetching algorithm data..."
+      />
+    );
 
   return (
     <div className="space-y-4">
-      <TableSearch 
+      <TableSearch
         searchTerm={searchTerm}
         onSearchChange={setSearchTerm}
         placeholder="Search algorithms by name..."

@@ -20,7 +20,6 @@ const AlgorithmCard = ({
           : "border-gray-200 bg-white hover:border-indigo-200 hover:shadow-sm"
       }`}
     >
-      {/* Selection indicator badge */}
       {isSelected && (
         <div className="absolute -top-2 -right-2 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
           <svg
@@ -37,7 +36,6 @@ const AlgorithmCard = ({
         </div>
       )}
 
-      {/* Algorithm label */}
       <div className="text-center">
         <h3 className="font-radio text-base font-semibold text-stone-800 mb-1">
           {showNames ? algorithm.name : `Algorithm ${index + 1}`}
@@ -49,7 +47,6 @@ const AlgorithmCard = ({
         )}
       </div>
 
-      {/* View button */}
       <button
         onClick={() => onView(index)}
         disabled={isCurrent}
@@ -67,7 +64,6 @@ const AlgorithmCard = ({
         {isCurrent ? "VIEWING" : "VIEW"}
       </button>
 
-      {/* Selection button */}
       {!showNames && (
         <button
           onClick={() => onSelect(algorithm)}

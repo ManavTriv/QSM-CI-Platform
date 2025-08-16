@@ -8,7 +8,6 @@ import LoadingSpinner from "../components/LoadingSpinner";
 import MetricOverview from "../components/MetricOverview";
 import { BarChart } from "lucide-react";
 
-// Lazy load heavy chart component (lowers npm bundle size)
 const DotPlot = lazy(() => import("../components/DotPlot"));
 
 const MetricContent = () => {

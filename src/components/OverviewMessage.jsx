@@ -1,43 +1,50 @@
 import { Table, BarChart2, Info } from "lucide-react";
+import MessageCard from "./MessageCard";
+import InfoSection from "./InfoSection";
 
 const OverviewMessage = () => {
   return (
-    <div className="space-y-3">
-      <h1 className="font-radio text-indigo-400 font-semibold">
-        Algorithm and Metric Overview
-      </h1>
-      <div className="text-[0.9375rem] text-stone-800 font-radio space-y-3">
-        <div className="flex items-start gap-2">
-          <Table className="mt-1 h-4 w-4 text-indigo-400" />
-          <span>
-            This table provides an overview of the{" "}
-            <span className="font-medium">QSM algorithms</span>, along with
-            their corresponding{" "}
-            <span className="font-medium">metric values</span>.
-          </span>
-        </div>
+    <MessageCard
+      icon={Table}
+      title="Algorithm and Metric Overview"
+      subtitle="Comprehensive analysis of QSM algorithms and performance metrics"
+    >
+      <div className="space-y-3">
+        <InfoSection
+          icon={Table}
+          title="Algorithm Metrics Table"
+          variant="primary"
+        >
+          This table provides an overview of the{" "}
+          <span className="font-medium">QSM algorithms</span>, along with their
+          corresponding <span className="font-medium">metric values</span>.
+        </InfoSection>
 
-        <div className="flex items-start gap-2">
-          <BarChart2 className="mt-1 h-4 w-4 text-indigo-400" />
-          <span>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <InfoSection
+            icon={BarChart2}
+            title="ELO Rating System"
+            variant="secondary"
+          >
             The <span className="font-medium">ELO rating</span> is a
             community-driven metric that scores the algorithms against each
             other based on their{" "}
             <span className="font-medium">susceptibility maps</span>.
-          </span>
-        </div>
+          </InfoSection>
 
-        <div className="flex items-start gap-2">
-          <Info className="mt-1 h-4 w-4 text-indigo-400" />
-          <span>
+          <InfoSection
+            icon={Info}
+            title="Interactive Navigation"
+            variant="secondary"
+          >
             To view more details about a{" "}
             <span className="font-medium">metric</span> or{" "}
             <span className="font-medium">algorithm</span>, click on the
             respective name in the table.
-          </span>
+          </InfoSection>
         </div>
       </div>
-    </div>
+    </MessageCard>
   );
 };
 

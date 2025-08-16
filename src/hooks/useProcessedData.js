@@ -19,7 +19,6 @@ const useProcessedData = () => {
             return { ...entry, name };
           } catch (urlError) {
             console.warn("Invalid URL for entry:", entry.url, urlError);
-            // Fallback to objectId or a safe default name
             const fallbackName = entry.objectId || "Unknown Algorithm";
             return { ...entry, name: fallbackName };
           }

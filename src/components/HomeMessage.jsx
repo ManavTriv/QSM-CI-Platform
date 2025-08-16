@@ -30,8 +30,8 @@ const navItems = [
 
 const HomeMessage = () => {
   return (
-    <section className="min-h-[calc(100vh-88px)] flex flex-col items-center justify-center bg-[#fffefb] py-8 px-6 font-radio">
-      <div className="text-center mb-16 max-w-4xl">
+    <section className="flex flex-col items-center justify-center bg-[#fffefb] py-12 px-6 font-radio">
+      <div className="text-center mb-12 max-w-4xl">
         <h1 className="text-4xl sm:text-5xl font-bold text-indigo-400 mb-6">
           Welcome to QSM-CI
         </h1>

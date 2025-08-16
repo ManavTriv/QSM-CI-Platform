@@ -1,40 +1,47 @@
 import { ChevronDown, RotateCw, SlidersHorizontal } from "lucide-react";
+import MessageCard from "./MessageCard";
+import InfoSection from "./InfoSection";
 
 const ImagesMessage = () => {
   return (
-    <div className="space-y-3">
-      <h1 className="font-radio text-indigo-400 font-semibold">
-        QSM Medical Image Viewer
-      </h1>
-      <div className="space-y-3 text-[0.9375rem] text-stone-800 font-radio">
-        <div className="flex items-start gap-2">
-          <ChevronDown className="mt-1 h-4 w-4 text-indigo-400" />
-          <span>
-            Select an <span className="font-medium">algorithm</span> using the
-            dropdown below to view the{" "}
-            <span className="font-medium">
-              corresponding susceptibility map
-            </span>
-            .
-          </span>
-        </div>
-        <div className="flex items-start gap-2">
-          <RotateCw className="mt-1 h-4 w-4 text-indigo-400" />
-          <span>
+    <MessageCard
+      icon={ChevronDown}
+      title="QSM Medical Image Viewer"
+      subtitle="Interactive 3D visualization of susceptibility maps"
+    >
+      <div className="space-y-3">
+        <InfoSection
+          icon={ChevronDown}
+          title="Algorithm Selection"
+          variant="primary"
+        >
+          Select an <span className="font-medium">algorithm</span> using the
+          dropdown below to view the{" "}
+          <span className="font-medium">corresponding susceptibility map</span>.
+        </InfoSection>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <InfoSection
+            icon={RotateCw}
+            title="Interactive Controls"
+            variant="secondary"
+          >
             The viewer supports{" "}
             <span className="font-medium">drag and drop</span> functionality to
             rotate and view different segments of the image.
-          </span>
-        </div>
-        <div className="flex items-start gap-2">
-          <SlidersHorizontal className="mt-1 h-4 w-4 text-indigo-400" />
-          <span>
+          </InfoSection>
+
+          <InfoSection
+            icon={SlidersHorizontal}
+            title="Image Adjustments"
+            variant="secondary"
+          >
             <span className="font-medium">Brightness and contrast</span> of the
             susceptibility maps can be adjusted using the sliders below.
-          </span>
+          </InfoSection>
         </div>
       </div>
-    </div>
+    </MessageCard>
   );
 };
 

@@ -8,7 +8,6 @@ import Metric from "../pages/Metric";
 import Algorithm from "../pages/Algorithm";
 import Contribute from "../pages/Contribute";
 
-// Lazy load heavy components (lowers npm bundle size)
 const Compare = lazy(() => import("../pages/Compare"));
 
 const AppRouter = () => {

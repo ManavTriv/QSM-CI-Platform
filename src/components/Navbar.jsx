@@ -63,14 +63,12 @@ const Navbar = () => {
             </span>
           </Link>
 
-          {/* desktop */}
           <nav className="hidden md:flex items-center space-x-8">
             {links.map(({ to, label }) => (
               <NavLink key={to} to={to} label={label} />
             ))}
           </nav>
 
-          {/* hamburger */}
           <button
             onClick={toggleMobileMenu}
             className="md:hidden p-2 rounded-lg text-stone-600 hover:text-indigo-600 hover:bg-indigo-50 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-1"
@@ -80,7 +78,6 @@ const Navbar = () => {
           </button>
         </div>
 
-        {/* Mobile Navigation */}
         {isMobileMenuOpen && (
           <div className="md:hidden border-t border-stone-200 bg-white">
             <div className="px-2 pt-2 pb-3 space-y-1">
