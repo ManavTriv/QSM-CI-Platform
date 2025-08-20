@@ -15,8 +15,8 @@ const InfoSection = ({
       <div className="flex items-start gap-3">
         <Icon className="mt-0.5 h-4 w-4 text-indigo-600 flex-shrink-0" />
         <div>
-          <h3 className="font-semibold text-stone-800 mb-1 text-sm">{title}</h3>
-          <div className="text-xs text-stone-700 leading-relaxed">
+          <h3 className="font-semibold text-stone-800 mb-1 text-base">{title}</h3>
+          <div className="text-sm text-stone-700 leading-relaxed">
             {children}
           </div>
         </div>
