@@ -3,9 +3,6 @@ import useEloUpdater from "../../hooks/useEloUpdater";
 import useAlgorithmComparison from "../../hooks/useAlgorithmComparison";
 import ErrorMessage from "../ErrorMessage";
 import LoadingSpinner from "../LoadingSpinner";
-import ComparisonControls from "./ComparisonControls";
-import AlgorithmNavigation from "./AlgorithmNavigation";
-import CurrentAlgorithmInfo from "./CurrentAlgorithmInfo";
 import ComparisonInstructions from "./ComparisonInstructions";
 
 const NiivueViewer = lazy(() => import("../NiivueViewer"));
@@ -18,10 +15,8 @@ const AlgorithmComparison = ({ data }) => {
     currentPair,
     selectedAlgorithm,
     showNames,
-    currentViewerIndex,
     handleNext,
     handleSelect: handleAlgorithmSelect,
-    handleViewChange,
   } = useAlgorithmComparison(data);
 
   const handleSelect = async (algorithm) => {
@@ -47,38 +42,86 @@ const AlgorithmComparison = ({ data }) => {
 
   return (
     <div className="flex flex-col items-center w-full bg-[#fffefb] pb-8 font-radio">
-      <ComparisonControls showNames={showNames} onNext={handleNext} />
-
       <div className="flex flex-col space-y-8 w-full">
-        <AlgorithmNavigation
-          currentPair={currentPair}
-          selectedAlgorithm={selectedAlgorithm}
-          currentViewerIndex={currentViewerIndex}
-          showNames={showNames}
-          onViewChange={handleViewChange}
-          onSelect={handleSelect}
-        />
-
-        <CurrentAlgorithmInfo
-          currentPair={currentPair}
-          currentViewerIndex={currentViewerIndex}
-          showNames={showNames}
-        />
+        <div className="flex justify-center">
+          <button
+            onClick={handleNext}
+            disabled={selectedAlgorithm === null}
+            className={`px-6 py-3 font-radio font-medium rounded-lg transition-all shadow-sm ${
+              selectedAlgorithm
+                ? "bg-indigo-500 text-white hover:bg-indigo-600 cursor-pointer"
+                : "bg-gray-300 text-gray-500 cursor-not-allowed"
+            }`}
+          >
+            Next Comparison
+          </button>
+        </div>
 
         {currentPair.length > 0 && (
-          <div className="w-full rounded-xl overflow-hidden bg-white border border-indigo-100 shadow-md">
-            <div className="p-6">
-              <Suspense
-                fallback={
-                  <LoadingSpinner
-                    message="Loading 3D viewer"
-                    description="Initializing medical image viewer..."
-                  />
-                }
+          <div className="w-full space-y-6">
+            {currentPair.map((algorithm, index) => (
+              <div
+                key={algorithm.objectId}
+                className={`w-full rounded-xl overflow-hidden bg-white border-2 shadow-md transition-all duration-300 ${
+                  selectedAlgorithm?.objectId === algorithm.objectId
+                    ? "border-green-400 bg-green-50 shadow-lg"
+                    : "border-indigo-100 hover:border-indigo-200"
+                }`}
               >
-                <NiivueViewer image={currentPair[currentViewerIndex]?.url} />
-              </Suspense>
-            </div>
+                <div className="p-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="font-radio text-xl font-semibold text-stone-800">
+                      {showNames ? algorithm.name : `Algorithm ${index + 1}`}
+                    </h3>
+
+                    {!showNames && (
+                      <button
+                        onClick={() => handleSelect(algorithm)}
+                        disabled={selectedAlgorithm !== null}
+                        className={`px-4 py-2 rounded-lg font-radio text-sm font-semibold transition-all shadow-sm ${
+                          selectedAlgorithm?.objectId === algorithm.objectId
+                            ? "bg-green-500 text-white cursor-default"
+                            : selectedAlgorithm !== null
+                            ? "bg-gray-200 text-gray-500 cursor-not-allowed"
+                            : "bg-indigo-500 text-white hover:bg-indigo-600 cursor-pointer"
+                        }`}
+                        title={
+                          selectedAlgorithm?.objectId === algorithm.objectId
+                            ? "This algorithm is selected"
+                            : selectedAlgorithm !== null
+                            ? "You have already made a selection"
+                            : "Select this algorithm as your preference"
+                        }
+                      >
+                        {selectedAlgorithm?.objectId === algorithm.objectId
+                          ? "✓ SELECTED"
+                          : selectedAlgorithm !== null
+                          ? "NOT SELECTED"
+                          : "SELECT THIS"}
+                      </button>
+                    )}
+
+                    {showNames &&
+                      selectedAlgorithm?.objectId === algorithm.objectId && (
+                        <span className="inline-block px-3 py-1 text-sm font-radio font-medium bg-green-100 text-green-700 rounded-full">
+                          ✓ SELECTED
+                        </span>
+                      )}
+                  </div>
+
+                  <Suspense
+                    fallback={
+                      <LoadingSpinner
+                        message="Loading 3D viewer"
+                        description="Initializing medical image viewer..."
+                      />
+                    }
+                  >
+                    <NiivueViewer image={algorithm.url} />
+                  </Suspense>
+                </div>
+              </div>
+            ))}
           </div>
         )}
 

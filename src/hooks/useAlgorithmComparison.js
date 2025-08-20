@@ -6,7 +6,6 @@ const useAlgorithmComparison = (data) => {
   const [previousPair, setPreviousPair] = useState([]);
   const [selectedAlgorithm, setSelectedAlgorithm] = useState(null);
   const [showNames, setShowNames] = useState(false);
-  const [currentViewerIndex, setCurrentViewerIndex] = useState(0);
   const initializedRef = useRef(false);
 
   const generateNewPair = useCallback(() => {
@@ -43,7 +42,6 @@ const useAlgorithmComparison = (data) => {
     setUsedIndices((prev) => [...prev, firstIndex, secondIndex]);
     setSelectedAlgorithm(null);
     setShowNames(false);
-    setCurrentViewerIndex(0); // Reset to first algorithm
   }, [data, usedIndices, previousPair]);
 
   useEffect(() => {
@@ -63,18 +61,12 @@ const useAlgorithmComparison = (data) => {
     setShowNames(true);
   };
 
-  const handleViewChange = (index) => {
-    setCurrentViewerIndex(index);
-  };
-
   return {
     currentPair,
     selectedAlgorithm,
     showNames,
-    currentViewerIndex,
     handleNext,
     handleSelect,
-    handleViewChange,
   };
 };
 
