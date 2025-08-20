@@ -1,6 +1,7 @@
 import React from "react";
 
 const InfoSection = ({
+  // eslint-disable-next-line no-unused-vars
   icon: Icon,
   title,
   children,

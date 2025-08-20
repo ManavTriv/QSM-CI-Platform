@@ -4,7 +4,7 @@ import ImagesMessage from "../components/ImagesMessage";
 import ImageSelect from "../components/ImageSelect";
 import LoadingSpinner from "../components/LoadingSpinner";
 
-const NiivueViewer = lazy(() => import("../components/NiivueViewer"));
+const NiivueViewer = lazy(() => import("../components/NiivueViewer/NiivueViewer"));
 
 const Images = () => {
   const [image, setImage] = useState(null);

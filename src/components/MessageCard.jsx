@@ -1,6 +1,7 @@
 import React from "react";
 
 const MessageCard = ({
+  // eslint-disable-next-line no-unused-vars
   icon: Icon,
   title,
   subtitle,

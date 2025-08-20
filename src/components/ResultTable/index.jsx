@@ -7,11 +7,7 @@ import TableHeader from "./TableHeader";
 import TableBody from "./TableBody";
 import TableSearch from "./TableSearch";
 
-const tableClasses = {
-  container: "pb-1 overflow-x-auto",
-  table:
-    "min-w-full bg-white border border-indigo-100 shadow-md rounded-lg overflow-hidden border-collapse separate",
-};
+
 
 const ResultTable = () => {
   const { data, error, loading } = useProcessedData();

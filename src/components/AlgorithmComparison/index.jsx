@@ -5,7 +5,7 @@ import ErrorMessage from "../ErrorMessage";
 import LoadingSpinner from "../LoadingSpinner";
 import ComparisonInstructions from "./ComparisonInstructions";
 
-const NiivueViewer = lazy(() => import("../NiivueViewer"));
+const NiivueViewer = lazy(() => import("../NiivueViewer/NiivueViewer"));
 
 const AlgorithmComparison = ({ data }) => {
   const updateElo = useEloUpdater();
