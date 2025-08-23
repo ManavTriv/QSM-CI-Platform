@@ -1,5 +1,6 @@
 import "@testing-library/jest-dom";
 
+// Mock Parse.js globally
 global.Parse = {
   initialize: vi.fn(),
   Object: {
@@ -15,6 +16,7 @@ global.Parse = {
   })),
 };
 
+// Mock XMLHttpRequest
 global.XMLHttpRequest = vi.fn(() => ({
   open: vi.fn(),
   send: vi.fn(),
@@ -24,7 +26,7 @@ global.XMLHttpRequest = vi.fn(() => ({
   responseText: '{"success": true}',
 }));
 
-// Mock fetch to prevent network errors
+// Mock fetch API
 global.fetch = vi.fn(() =>
   Promise.resolve({
     ok: true,
@@ -33,6 +35,7 @@ global.fetch = vi.fn(() =>
   })
 );
 
+// Mock console methods
 global.console = {
   ...console,
   warn: vi.fn(),

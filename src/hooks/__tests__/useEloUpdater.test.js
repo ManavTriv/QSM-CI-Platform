@@ -1,5 +1,10 @@
+/**
+ * Tests for useEloUpdater Hook
+ */
+
 import { describe, it, expect, beforeEach, vi } from "vitest";
 
+// Mock external dependencies
 vi.mock("../api/parseConfig", () => ({
   initializeParse: vi.fn(),
 }));
@@ -11,9 +16,11 @@ vi.mock("../utils/ensureAnonymousUser", () => ({
 import useEloUpdater from "../useEloUpdater";
 
 describe("useEloUpdater", () => {
-  it("should return a function", () => {
-    const updateElo = useEloUpdater();
-    expect(typeof updateElo).toBe("function");
+  describe("Hook structure", () => {
+    it("should return a function", () => {
+      const updateElo = useEloUpdater();
+      expect(typeof updateElo).toBe("function");
+    });
   });
 
   describe("ELO calculation formulas", () => {
@@ -25,8 +32,7 @@ describe("useEloUpdater", () => {
 
     it("should calculate expected score correctly for equal ratings", () => {
       // For equal elo (1500 vs 1500), expected score should be 0.5
-      // We can't access the internal function directly, so verify math logic
-      // Expected score formula: 1 / (1 + 10^((algo1 - algo2) / 400))
+      // Expected score: 1 / (1 + 10^((algo1 - algo2) / 400))
       const expectedScore = 1 / (1 + Math.pow(10, (1500 - 1500) / 400));
       expect(expectedScore).toBe(0.5);
     });

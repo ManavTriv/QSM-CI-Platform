@@ -1,3 +1,8 @@
+/**
+ * Tests for useFetchData Hook
+ */
+
+// Mock Parse.js modules
 vi.mock("parse", () => ({
   default: {
     initialize: vi.fn(),
@@ -33,6 +38,7 @@ vi.mock("parse/dist/parse.min.js", () => ({
   },
 }));
 
+// Mock parseConfig
 vi.mock("../api/parseConfig", () => ({
   initializeParse: vi.fn(() => ({
     Object: {
@@ -64,8 +70,6 @@ describe("useFetchData", () => {
     expect(typeof fetchData).toBe("function");
     expect(fetchData.constructor.name).toBe("AsyncFunction");
   });
-
-
 
   describe("data transformation logic", () => {
     it("should transform Parse objects correctly", () => {

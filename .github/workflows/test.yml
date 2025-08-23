@@ -1,31 +1,31 @@
 name: Run Tests
 
 on:
-  workflow_dispatch: 
+  workflow_dispatch: # Manual trigger only
 
 jobs:
   test:
     runs-on: ubuntu-latest
-    
+
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20'
-        cache: 'npm'
-        
-    - name: Install dependencies
-      run: npm install
-      
-    - name: Run tests
-      run: npm run test:run
-      
-    - name: Test summary
-      if: success()
-      run: |
-        echo "✅ All tests passed!"
-        echo "📊 Test summary:"
-        echo "Total tests: $(npm run test:run --silent | grep -o '[0-9]\+ tests' | head -1)"
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm run test:run
+
+      - name: Test summary
+        if: success()
+        run: |
+          echo "✅ All tests passed!"
+          echo "📊 Test summary:"
+          echo "Total tests: $(npm run test:run --silent | grep -o '[0-9]\+ tests' | head -1)"
