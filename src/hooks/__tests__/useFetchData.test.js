@@ -1,7 +1,19 @@
 import { describe, it, expect, vi } from "vitest";
 
 vi.mock("../api/parseConfig", () => ({
-  initializeParse: vi.fn(),
+  initializeParse: vi.fn(() => ({
+    Object: {
+      extend: vi.fn(() => ({
+        get: vi.fn(),
+        set: vi.fn(),
+        save: vi.fn(),
+      })),
+    },
+    Query: vi.fn(() => ({
+      find: vi.fn(),
+      get: vi.fn(),
+    })),
+  })),
 }));
 
 import fetchData from "../useFetchData";
