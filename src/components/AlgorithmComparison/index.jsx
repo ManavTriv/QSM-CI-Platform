@@ -26,8 +26,15 @@ const AlgorithmComparison = ({ data }) => {
       (a) => a.objectId !== algorithm.objectId
     );
 
-    const error = await updateElo(algorithm.objectId, otherAlgorithm.objectId);
-    if (error) {
+    try {
+      const result = await updateElo(
+        algorithm.objectId,
+        otherAlgorithm.objectId
+      );
+      if (result && result.winner && result.loser) {
+        console.log("ELO update successful:", result);
+      }
+    } catch (error) {
       setEloError(error);
     }
   };
