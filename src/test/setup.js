@@ -15,6 +15,24 @@ global.Parse = {
   })),
 };
 
+global.XMLHttpRequest = vi.fn(() => ({
+  open: vi.fn(),
+  send: vi.fn(),
+  setRequestHeader: vi.fn(),
+  readyState: 4,
+  status: 200,
+  responseText: '{"success": true}',
+}));
+
+// Mock fetch to prevent network errors
+global.fetch = vi.fn(() =>
+  Promise.resolve({
+    ok: true,
+    json: () => Promise.resolve({ success: true }),
+    text: () => Promise.resolve('{"success": true}'),
+  })
+);
+
 global.console = {
   ...console,
   warn: vi.fn(),

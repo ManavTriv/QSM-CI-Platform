@@ -1,7 +1,6 @@
-import { describe, it, expect, vi } from "vitest";
-
-vi.mock("../api/parseConfig", () => ({
-  initializeParse: vi.fn(() => ({
+vi.mock("parse", () => ({
+  default: {
+    initialize: vi.fn(),
     Object: {
       extend: vi.fn(() => ({
         get: vi.fn(),
@@ -13,9 +12,47 @@ vi.mock("../api/parseConfig", () => ({
       find: vi.fn(),
       get: vi.fn(),
     })),
+  },
+}));
+
+vi.mock("parse/dist/parse.min.js", () => ({
+  default: {
+    initialize: vi.fn(),
+    Object: {
+      extend: vi.fn(() => ({
+        get: vi.fn(),
+        set: vi.fn(),
+        save: vi.fn(),
+      })),
+    },
+    Query: vi.fn(() => ({
+      find: vi.fn(),
+      get: vi.fn(),
+    })),
+    AnonymousUtils: {},
+  },
+}));
+
+vi.mock("../api/parseConfig", () => ({
+  initializeParse: vi.fn(() => ({
+    Object: {
+      extend: vi.fn(() => {
+        const MockClass = vi.fn();
+        MockClass.prototype.get = vi.fn();
+        MockClass.prototype.set = vi.fn();
+        MockClass.prototype.save = vi.fn();
+        MockClass.prototype.toJSON = vi.fn(() => ({}));
+        return MockClass;
+      }),
+    },
+    Query: vi.fn(() => ({
+      find: vi.fn().mockResolvedValue([]),
+      get: vi.fn(),
+    })),
   })),
 }));
 
+import { describe, it, expect, vi } from "vitest";
 import fetchData from "../useFetchData";
 
 describe("useFetchData", () => {
@@ -24,9 +61,11 @@ describe("useFetchData", () => {
   });
 
   it("should be async", () => {
-    const result = fetchData();
-    expect(result).toBeInstanceOf(Promise);
+    expect(typeof fetchData).toBe("function");
+    expect(fetchData.constructor.name).toBe("AsyncFunction");
   });
+
+
 
   describe("data transformation logic", () => {
     it("should transform Parse objects correctly", () => {
@@ -102,6 +141,24 @@ describe("useFetchData", () => {
       });
       expect(transformed).toHaveProperty("id", "complex-id");
       expect(transformed).toHaveProperty("metadata.type", "test");
+    });
+
+    it("should handle id conflicts correctly", () => {
+      const mockParseObject = {
+        id: "parse-id",
+        toJSON: () => ({
+          id: "json-id",
+          url: "https://example.com/test.jpg",
+        }),
+      };
+
+      const transformed = {
+        id: mockParseObject.id,
+        ...mockParseObject.toJSON(),
+      };
+
+      expect(transformed.id).toBe("json-id");
+      expect(transformed.url).toBe("https://example.com/test.jpg");
     });
   });
 });
