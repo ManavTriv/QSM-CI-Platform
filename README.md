@@ -1,5 +1,7 @@
 # QSM-CI Thesis Project
 
+[![Tests](https://github.com/{YOUR_USERNAME}/QSM-CI-Project/workflows/Run%20Tests/badge.svg)](https://github.com/{YOUR_USERNAME}/QSM-CI-Project/actions)
+
 A React-based web platform for comparing and evaluating Quantitative Susceptibility Mapping (QSM) algorithms through interactive visualizations, metrics analysis, and community-driven ELO rankings.
 
 ## Getting Started
@@ -34,15 +36,6 @@ npm run lint
 # Build for production
 npm run build
 ```
-
-## Styling with Tailwind CSS v4
-
-This project uses **Tailwind CSS v4** with a CSS-first approach. Key styling notes:
-
-- **Custom Font**: The project uses Radio Canada font via the `.font-radio` utility class defined in `src/styles/index.css`
-- **Theme Variables**: Custom CSS variables are defined in the `@theme` block
-- **CSS-First**: Unlike v3, Tailwind v4 prioritizes CSS custom properties and utilities defined in CSS files
-- **No Config File**: Tailwind v4 doesn't require a `tailwind.config.js` file for basic usage
 
 ### Custom Utilities
 - `.font-radio`: Applies the Radio Canada font family
