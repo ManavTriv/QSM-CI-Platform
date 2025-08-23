@@ -46,16 +46,16 @@ const useEloUpdater = () => {
       loser.set("Elo", newLoserElo);
       await loser.save();
 
-      console.log(
-        `ELO Updated - Winner: ${winnerElo} → ${newWinnerElo} (+${
-          newWinnerElo - winnerElo
-        })`
-      );
-      console.log(
-        `ELO Updated - Loser: ${loserElo} → ${newLoserElo} (${
-          newLoserElo - loserElo
-        })`
-      );
+      //console.log(
+      //  `ELO Updated - Winner: ${winnerElo} → ${newWinnerElo} (+${
+      //    newWinnerElo - winnerElo
+      //  })`
+      //);
+      //console.log(
+      //  `ELO Updated - Loser: ${loserElo} → ${newLoserElo} (${
+      //    newLoserElo - loserElo
+      //  })`
+      //);
 
       return {
         winner: {
