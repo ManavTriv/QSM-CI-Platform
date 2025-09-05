@@ -4,6 +4,23 @@ A React-based web platform for comparing and evaluating Quantitative Susceptibil
 
 > Repo: `ManavTriv/QSM-CI-Platform` · Live: qsm-ci-project.vercel.app
 
+## Table of Contents
+
+- [Features](#features)
+- [Tech Stack](#-tech-stack)
+- [Repo Layout](#repo-layout-high-level)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Quick Start](#quick-start)
+  - [Available Scripts](#available-scripts)
+  - [Environment Configuration](#environment-configuration)
+  - [Custom Utilities](#custom-utilities)
+- [Testing](#testing)
+  - [Local Testing](#local-testing)
+  - [Test Structure](#test-structure)
+  - [GitHub Actions Testing](#github-actions-testing)
+- [Thesis Context](#thesis-context)
+
 ## Features
 
 1. **Hub for QSM-CI**: Centralised platform for Quantitative Susceptibility Mapping algorithm evaluation and comparison
@@ -15,7 +32,7 @@ A React-based web platform for comparing and evaluating Quantitative Susceptibil
 7. **ELO Rating**: Dynamic ranking system updated through "which is better?" selections
 8. **Responsive UI**: Modern, accessible design built with Tailwind CSS
 
-## 🧱 Tech Stack
+## Tech Stack
 
 - **Frontend**: React 19 (Vite)
 - **Routing**: React Router v7
