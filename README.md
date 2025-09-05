@@ -1,4 +1,4 @@
-# QSM‑CI Thesis Project (Frontend)
+# QSM‑CI Platform
 
 A React-based web platform for comparing and evaluating Quantitative Susceptibility Mapping (QSM) algorithms through interactive visualisations, metrics analysis, and community-driven ELO rankings.
 
