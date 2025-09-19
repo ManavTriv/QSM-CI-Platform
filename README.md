@@ -143,7 +143,7 @@ npm run test
 ```
 
 ### Test Structure
-- **Test files**: Located in `src/hooks/__tests__/` and `src/utils/__tests__/`
+- **Test files**: Located in `src/api/__tests__/`, `src/hooks/__tests__/`, and `src/utils/__tests__/`
 - **Test setup**: Configured in `src/test/setup.js`
 - **Test runner**: Vitest with JSDOM environment
 - **Testing utilities**: React Testing Library for component testing

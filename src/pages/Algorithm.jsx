@@ -4,7 +4,6 @@ import ErrorMessage from "../components/ErrorMessage";
 import LoadingSpinner from "../components/LoadingSpinner";
 import Navbar from "../components/Navbar";
 import MessageCard from "../components/MessageCard";
-import InfoSection from "../components/InfoSection";
 import NiivueViewer from "../components/NiivueViewer/NiivueViewer";
 import { Code, Tag, FileText, Image } from "lucide-react";
 
