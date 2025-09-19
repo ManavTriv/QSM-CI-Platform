@@ -1,5 +1,16 @@
 import { memo } from "react";
-import SortIcon from "./SortIcon";
+import { ChevronUp, ChevronDown, ChevronsUpDown } from "lucide-react";
+
+const SortIcon = ({ direction }) => {
+  const iconProps = {
+    size: 16,
+    className: "cursor-pointer hover:text-indigo-400 w-4 flex justify-center",
+  };
+
+  if (direction === "high-to-low") return <ChevronDown {...iconProps} />;
+  if (direction === "low-to-high") return <ChevronUp {...iconProps} />;
+  return <ChevronsUpDown {...iconProps} />;
+};
 
 const tableClasses = {
   thead: "bg-indigo-50",
