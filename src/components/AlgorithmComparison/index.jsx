@@ -124,7 +124,10 @@ const AlgorithmComparison = ({ data }) => {
                       />
                     }
                   >
-                    <NiivueViewer image={algorithm.url} algorithmName={algorithm.name} />
+                    <NiivueViewer
+                      image={algorithm.url}
+                      algorithmName={algorithm.name}
+                    />
                   </Suspense>
                 </div>
               </div>

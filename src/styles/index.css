@@ -8,3 +8,32 @@
 .font-radio {
   font-family: var(--font-radio);
 }
+
+.table-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #a5b4fc #f1f5f9;
+}
+
+.table-scrollbar::-webkit-scrollbar {
+  height: 12px;
+}
+
+.table-scrollbar::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 6px;
+  margin: 0 4px;
+}
+
+.table-scrollbar::-webkit-scrollbar-thumb {
+  background: #a5b4fc;
+  border-radius: 6px;
+  border: 2px solid #f1f5f9;
+}
+
+.table-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #818cf8;
+}
+
+.table-scrollbar::-webkit-scrollbar-thumb:active {
+  background: #6366f1;
+}

@@ -25,8 +25,12 @@ const NiivueViewer = ({ image, algorithmName }) => {
     const nv = nvRef.current;
     if (!nv || !nv.volumes || !nv.volumes[0]) return;
 
-    let newMin = Number.isFinite(minVal) ? minVal : initialWindowRef.current.min;
-    let newMax = Number.isFinite(maxVal) ? maxVal : initialWindowRef.current.max;
+    let newMin = Number.isFinite(minVal)
+      ? minVal
+      : initialWindowRef.current.min;
+    let newMax = Number.isFinite(maxVal)
+      ? maxVal
+      : initialWindowRef.current.max;
 
     if (newMax - newMin < epsilon) newMax = newMin + epsilon;
 
@@ -35,7 +39,8 @@ const NiivueViewer = ({ image, algorithmName }) => {
     nv.updateGLVolume();
   };
 
-  const clampToGlobals = (val) => Math.max(GLOBAL_MIN, Math.min(GLOBAL_MAX, val));
+  const clampToGlobals = (val) =>
+    Math.max(GLOBAL_MIN, Math.min(GLOBAL_MAX, val));
 
   useEffect(() => {
     setIsLoading(true);
@@ -52,16 +57,19 @@ const NiivueViewer = ({ image, algorithmName }) => {
     nvRef.current = nv;
     nv.attachToCanvas(canvasRef.current);
 
-    nv
-      .loadVolumes([{ url: image }])
+    nv.loadVolumes([{ url: image }])
       .then(() => {
         nv.setSliceType(nv.sliceTypeMultiplanar);
 
         if (nv.volumes?.[0]) {
           const v = nv.volumes[0];
 
-          const baseMinRaw = Number.isFinite(v.cal_min) ? v.cal_min : GLOBAL_MIN;
-          const baseMaxRaw = Number.isFinite(v.cal_max) ? v.cal_max : GLOBAL_MAX;
+          const baseMinRaw = Number.isFinite(v.cal_min)
+            ? v.cal_min
+            : GLOBAL_MIN;
+          const baseMaxRaw = Number.isFinite(v.cal_max)
+            ? v.cal_max
+            : GLOBAL_MAX;
 
           let startMin = clampToGlobals(baseMinRaw);
           let startMax = clampToGlobals(baseMaxRaw);
@@ -122,12 +130,20 @@ const NiivueViewer = ({ image, algorithmName }) => {
               stroke="currentColor"
               viewBox="0 0 24 24"
             >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
             </svg>
           </div>
-          <h3 className="text-lg font-medium text-red-800 mb-2">Failed to Load Image</h3>
+          <h3 className="text-lg font-medium text-red-800 mb-2">
+            Failed to Load Image
+          </h3>
           <p className="text-red-600 text-sm">
-            Unable to load the medical image. Please try selecting a different algorithm.
+            Unable to load the medical image. Please try selecting a different
+            algorithm.
           </p>
         </div>
       </div>
@@ -141,11 +157,16 @@ const NiivueViewer = ({ image, algorithmName }) => {
           <div className="absolute inset-0 flex items-center justify-center bg-gray-50">
             <div className="text-center">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-500 mx-auto mb-2"></div>
-              <p className="text-stone-600 text-sm font-medium">Loading image...</p>
+              <p className="text-stone-600 text-sm font-medium">
+                Loading image...
+              </p>
             </div>
           </div>
         )}
-        <canvas ref={canvasRef} className="block w-full h-full object-contain" />
+        <canvas
+          ref={canvasRef}
+          className="block w-full h-full object-contain"
+        />
       </div>
 
       <div className="w-full md:w-[320px] flex-shrink-0 bg-white rounded-xl p-6 flex flex-col justify-center items-center border border-indigo-100 shadow-sm space-y-6">
@@ -157,11 +178,13 @@ const NiivueViewer = ({ image, algorithmName }) => {
           onReset={resetSettings}
           onWindowChange={applyWindow}
         />
-        
+
         {algorithmName && (
           <div className="w-full">
             <button
-              onClick={() => navigate(`/algorithm?name=${encodeURIComponent(algorithmName)}`)}
+              onClick={() =>
+                navigate(`/algorithm?name=${encodeURIComponent(algorithmName)}`)
+              }
               className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-indigo-400 text-white rounded-lg hover:bg-indigo-500 transition-colors duration-200 font-radio text-sm font-medium focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:ring-offset-2"
             >
               <ExternalLink className="w-4 h-4" />
