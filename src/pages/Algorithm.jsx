@@ -3,8 +3,10 @@ import useProcessedData from "../hooks/useProcessedData";
 import ErrorMessage from "../components/ErrorMessage";
 import LoadingSpinner from "../components/LoadingSpinner";
 import Navbar from "../components/Navbar";
-import NavigateButton from "../components/NavigateButton";
-import algorithmInfo from "../data/algorithmInfo";
+import MessageCard from "../components/MessageCard";
+import InfoSection from "../components/InfoSection";
+import NiivueViewer from "../components/NiivueViewer/NiivueViewer";
+import { Code, Tag, FileText, Image } from "lucide-react";
 
 const AlgorithmContent = () => {
   const location = useLocation();
@@ -26,40 +28,65 @@ const AlgorithmContent = () => {
   if (!algorithmData)
     return <ErrorMessage message={`Algorithm "${algorithmName}" not found`} />;
 
-  const { description, tags } = algorithmInfo[algorithmName] || {};
+  const { tags, algorithmDescription, url } = algorithmData;
 
   return (
     <div className="space-y-8">
-      <div>
-        <NavigateButton to="/" label="HOME" />
-      </div>
-      <div className="space-y-3">
-        <div className="space-y-1">
-          <h1 className="font-radio text-indigo-400 font-semibold ">
-            {algorithmName}
-          </h1>
-          {tags && (
-            <div className="flex flex-wrap gap-2">
-              {tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="font-radio px-2 py-1 text-[0.68rem] font-medium bg-indigo-100 text-stone-800 rounded-full"
-                >
-                  {tag}
-                </span>
-              ))}
+      <MessageCard
+        icon={Code}
+        title={algorithmName}
+        subtitle="Algorithm details and visualization"
+      >
+        <div className="space-y-3">
+
+          {tags && Array.isArray(tags) && tags.length > 0 && (
+            <div className="bg-indigo-50 rounded-lg p-3">
+              <div className="flex items-start gap-3">
+                <Tag className="h-4 w-4 text-indigo-600 flex-shrink-0 mt-0.5" />
+                <div>
+                  <h3 className="font-semibold text-stone-800 mb-1 text-base">Tags</h3>
+                  <div className="flex flex-wrap gap-2 mt-2">
+                    {tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="px-2 py-1 text-xs font-medium bg-indigo-100 text-indigo-700 rounded-full border border-indigo-200"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+          
+          {algorithmDescription && algorithmDescription.trim() && (
+            <div className="bg-gray-50 rounded-lg p-3">
+              <div className="flex items-start gap-3">
+                <FileText className="h-4 w-4 text-indigo-600 flex-shrink-0 mt-0.5" />
+                <div>
+                  <h3 className="font-semibold text-stone-800 mb-1 text-base">Description</h3>
+                  <div className="text-sm text-stone-700 leading-relaxed">
+                    {algorithmDescription}
+                  </div>
+                </div>
+              </div>
             </div>
           )}
         </div>
-        {description && (
-          <p className="font-radio text-[0.9375rem] text-stone-800">
-            {description}
-          </p>
-        )}
-      </div>
-      <div>
-        <div>[IMAGE OF ALGORITHM]</div>
-      </div>
+      </MessageCard>
+
+      {url && (
+        <MessageCard
+          icon={Image}
+          title="Algorithm Visualization"
+          subtitle="Interactive 3D view of the algorithm output"
+        >
+          <div className="bg-white rounded-lg border border-indigo-100 overflow-hidden">
+            <NiivueViewer image={url} algorithmName={algorithmName} />
+          </div>
+        </MessageCard>
+      )}
     </div>
   );
 };
