@@ -51,8 +51,10 @@ root/
 ├─ src/
 │  ├─ components/            # UI building blocks (Niivue viewer, tables, etc.)
 │  │  ├─ AlgorithmComparison/    # Side-by-side comparison components
+│  │  ├─ ImageSelect/            # Image selection components
 │  │  ├─ NiivueViewer/          # Medical image viewer components
-│  │  └─ ResultTable/           # Data table components
+│  │  ├─ ResultTable/           # Data table components
+│  │  └─ TagFilter/             # Tag filtering components
 │  ├─ pages/                 # Route pages (Home, Overview, Images, Compare, etc.)
 │  ├─ hooks/                 # Custom React hooks with tests
 │  ├─ data/                  # Static data (algorithm info, metric descriptions)
