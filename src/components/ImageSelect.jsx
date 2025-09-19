@@ -40,13 +40,14 @@ const ImageSelect = ({ setImage }) => {
   const handleSelect = (url) => {
     const newUrl = selectedUrl === url ? null : url;
     setSelectedUrl(newUrl);
-    setImage(newUrl);
+    const algorithmName = newUrl ? data.find((item) => item.url === newUrl)?.name : null;
+    setImage(newUrl, algorithmName);
     setIsOpen(false);
   };
 
   const clearSelection = () => {
     setSelectedUrl(null);
-    setImage(null);
+    setImage(null, null);
     setIsOpen(false);
   };
 

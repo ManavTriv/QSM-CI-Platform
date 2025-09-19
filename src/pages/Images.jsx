@@ -8,9 +8,11 @@ const NiivueViewer = lazy(() => import("../components/NiivueViewer/NiivueViewer"
 
 const Images = () => {
   const [image, setImage] = useState(null);
+  const [algorithmName, setAlgorithmName] = useState(null);
 
-  const updateImage = (newImage) => {
+  const updateImage = (newImage, name) => {
     setImage(newImage);
+    setAlgorithmName(name);
   };
 
   return (
@@ -29,7 +31,7 @@ const Images = () => {
                 />
               }
             >
-              <NiivueViewer image={image} />
+              <NiivueViewer image={image} algorithmName={algorithmName} />
             </Suspense>
           )}
         </div>

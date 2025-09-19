@@ -1,11 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Niivue } from "@niivue/niivue";
 import WindowControls from "./WindowControls";
+import { ExternalLink } from "lucide-react";
 
 const GLOBAL_MIN = -0.2;
 const GLOBAL_MAX = 0.2;
 
-const NiivueViewer = ({ image }) => {
+const NiivueViewer = ({ image, algorithmName }) => {
+  const navigate = useNavigate();
   const canvasRef = useRef(null);
   const nvRef = useRef(null);
 
@@ -145,7 +148,7 @@ const NiivueViewer = ({ image }) => {
         <canvas ref={canvasRef} className="block w-full h-full object-contain" />
       </div>
 
-      <div className="w-full md:w-[320px] flex-shrink-0 bg-white rounded-xl p-6 flex flex-col justify-center items-center border border-indigo-100 shadow-sm">
+      <div className="w-full md:w-[320px] flex-shrink-0 bg-white rounded-xl p-6 flex flex-col justify-center items-center border border-indigo-100 shadow-sm space-y-6">
         <WindowControls
           windowMin={windowMin}
           setWindowMin={setWindowMin}
@@ -154,6 +157,18 @@ const NiivueViewer = ({ image }) => {
           onReset={resetSettings}
           onWindowChange={applyWindow}
         />
+        
+        {algorithmName && (
+          <div className="w-full">
+            <button
+              onClick={() => navigate(`/algorithm?name=${encodeURIComponent(algorithmName)}`)}
+              className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-indigo-400 text-white rounded-lg hover:bg-indigo-500 transition-colors duration-200 font-radio text-sm font-medium focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:ring-offset-2"
+            >
+              <ExternalLink className="w-4 h-4" />
+              View Algorithm Details
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
