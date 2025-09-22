@@ -6,6 +6,7 @@ import Overview from "../pages/Overview";
 import Images from "../pages/Images";
 import Metric from "../pages/Metric";
 import Algorithm from "../pages/Algorithm";
+import Graphs from "../pages/Graphs";
 import Contribute from "../pages/Contribute";
 
 const Compare = lazy(() => import("../pages/Compare"));
@@ -33,6 +34,7 @@ const AppRouter = () => {
       />
       <Route path="/metric" element={<Metric />} />
       <Route path="/algorithm" element={<Algorithm />} />
+      <Route path="/graphs" element={<Graphs />} />
       <Route path="/contribute" element={<Contribute />} />
     </Routes>
   );

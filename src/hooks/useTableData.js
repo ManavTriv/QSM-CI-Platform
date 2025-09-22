@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import useProcessedTags from "./useProcessedTags";
 
 const useTableData = (data = []) => {
   const [sortConfig, setSortConfig] = useState({
@@ -8,13 +9,14 @@ const useTableData = (data = []) => {
   const [isSorting, setIsSorting] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedTags, setSelectedTags] = useState([]);
+  const { getAlgorithmProcessedTags } = useProcessedTags([], data);
 
   const requestSort = (key) => {
     if (isSorting) return;
 
     setIsSorting(true);
     let direction = "high-to-low";
-    
+
     if (sortConfig.key === key) {
       if (sortConfig.direction === "high-to-low") {
         direction = "low-to-high";
@@ -23,14 +25,14 @@ const useTableData = (data = []) => {
         key = null;
       }
     }
-    
+
     setSortConfig({ key, direction });
     setTimeout(() => setIsSorting(false), 100);
   };
 
   const filteredData = useMemo(() => {
     if (!data || !Array.isArray(data)) return [];
-    
+
     let filtered = [...data];
 
     // Filter by search term
@@ -40,15 +42,23 @@ const useTableData = (data = []) => {
       );
     }
 
-    // Filter by tags 
+    // Filter by tags
     if (selectedTags.length > 0) {
       filtered = filtered.filter((item) => {
-        // If algorithm has no tags or undefined tags, exclude it when tags are selected
-        if (!item?.tags || !Array.isArray(item.tags) || item.tags.length === 0) {
-          return false;
-        }
-        // Check if algorithm has ALL of the selected tags
-        return selectedTags.every((tag) => item.tags.includes(tag));
+        // Get processed tags for this algorithm (handles empty tags by adding NA values)
+        const { grouped, ungrouped } = getAlgorithmProcessedTags(
+          item.tags || []
+        );
+
+        // Create a list of all tags this algorithm has (including NA values for missing groups)
+        const algorithmTags = [...ungrouped];
+        Object.entries(grouped).forEach(([groupId, groupTags]) => {
+          groupTags.forEach((tagObj) => {
+            algorithmTags.push(tagObj.original);
+          });
+        });
+
+        return selectedTags.every((tag) => algorithmTags.includes(tag));
       });
     }
 
@@ -62,12 +72,10 @@ const useTableData = (data = []) => {
       const valueA = a[sortConfig.key];
       const valueB = b[sortConfig.key];
 
-      // Handle null/undefined values
       if (valueA == null && valueB == null) return 0;
       if (valueA == null) return 1;
       if (valueB == null) return -1;
 
-      // Sort based on direction
       if (valueA > valueB) {
         return sortConfig.direction === "high-to-low" ? -1 : 1;
       }

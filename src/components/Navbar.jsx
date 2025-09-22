@@ -36,6 +36,7 @@ const Navbar = () => {
     { to: "/overview", label: "OVERVIEW" },
     { to: "/images", label: "IMAGES" },
     { to: "/compare", label: "COMPARE" },
+    { to: "/graphs", label: "GRAPHS" },
     { to: "/contribute", label: "CONTRIBUTE" },
   ];
 

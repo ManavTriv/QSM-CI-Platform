@@ -1,5 +1,6 @@
 import { memo } from "react";
 import { ChevronUp, ChevronDown, ChevronsUpDown } from "lucide-react";
+import { createTableHeaders } from "../../config/metrics";
 
 const SortIcon = ({ direction }) => {
   const iconProps = {
@@ -21,19 +22,7 @@ const tableClasses = {
 };
 
 const TableHeader = memo(({ sortConfig, requestSort, onMetricClick }) => {
-  const headers = [
-    { key: "name", label: "ALGORITHM", sortable: false },
-    { key: "Elo", label: "ELO", sortable: true },
-    { key: "RMSE", label: "RMSE", sortable: true },
-    { key: "NRMSE", label: "NRMSE", sortable: true },
-    { key: "HFEN", label: "HFEN", sortable: true },
-    { key: "MAD", label: "MAD", sortable: true },
-    { key: "XSIM", label: "XSIM", sortable: true },
-    { key: "CC1", label: "CC1", sortable: true },
-    { key: "CC2", label: "CC2", sortable: true },
-    { key: "NMI", label: "NMI", sortable: true },
-    { key: "GXE", label: "GXE", sortable: true },
-  ];
+  const headers = createTableHeaders();
 
   const handleMetricNameClick = (header) => {
     if (header.sortable && header.key !== "name") {

@@ -1,10 +1,6 @@
 import { Search, X } from "lucide-react";
 
-const TableSearch = ({
-  searchTerm,
-  onSearchChange,
-  placeholder = "Search algorithms...",
-}) => {
+const TableSearch = ({ searchTerm, onSearchChange, placeholder = "Search algorithms..."}) => {
   return (
     <div className="relative">
       <div className="relative w-full">

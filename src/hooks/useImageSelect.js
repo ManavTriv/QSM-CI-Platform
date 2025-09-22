@@ -1,5 +1,6 @@
 import { useMemo, useRef, useState, useEffect } from "react";
 import useProcessedData from "./useProcessedData";
+import useProcessedTags from "./useProcessedTags";
 
 const useImageSelect = (setImage) => {
   const [selectedUrl, setSelectedUrl] = useState(null);
@@ -10,6 +11,7 @@ const useImageSelect = (setImage) => {
   const buttonRef = useRef(null);
 
   const { data, error, loading } = useProcessedData();
+  const { getAlgorithmProcessedTags } = useProcessedTags([], data);
 
   useEffect(() => {
     if (isOpen && buttonRef.current) {
@@ -32,10 +34,18 @@ const useImageSelect = (setImage) => {
     // Filter by tags 
     if (selectedTags.length > 0) {
       filtered = filtered.filter((item) => {
-        if (!item?.tags || !Array.isArray(item.tags) || item.tags.length === 0) {
-          return false;
-        }
-        return selectedTags.every((tag) => item.tags.includes(tag));
+        // Get processed tags for this algorithm (handles empty tags by adding NA values)
+        const { grouped, ungrouped } = getAlgorithmProcessedTags(item.tags || []);
+        
+        // Create a list of all tags this algorithm has (including NA values for missing groups)
+        const algorithmTags = [...ungrouped];
+        Object.entries(grouped).forEach(([groupId, groupTags]) => {
+          groupTags.forEach(tagObj => {
+            algorithmTags.push(tagObj.original);
+          });
+        });
+        
+        return selectedTags.every((tag) => algorithmTags.includes(tag));
       });
     }
     

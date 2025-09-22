@@ -4,14 +4,7 @@ import * as Slider from "@radix-ui/react-slider";
 const GLOBAL_MIN = -0.2;
 const GLOBAL_MAX = 0.2;
 
-const WindowControls = ({
-  windowMin,
-  setWindowMin,
-  windowMax,
-  setWindowMax,
-  onReset,
-  onWindowChange,
-}) => {
+const WindowControls = ({ windowMin, setWindowMin, windowMax, setWindowMax, onReset, onWindowChange }) => {
   const epsilon = 1e-6;
   const formatNumber = (n) => (Number.isFinite(n) ? n.toFixed(3) : "");
 
@@ -72,18 +65,15 @@ const WindowControls = ({
           ]}
           onValueChange={handleSliderChange}
           onValueCommit={handleSliderCommit}
-          aria-label="QSM Window"
         >
           <Slider.Track className="bg-stone-200 relative h-2 rounded-full flex-1">
             <Slider.Range className="absolute h-2 bg-indigo-400 rounded-full" />
           </Slider.Track>
           <Slider.Thumb
             className="w-5 h-5 bg-white border-2 border-indigo-400 rounded-full shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:ring-offset-2 cursor-pointer transition-all duration-200 hover:scale-110"
-            aria-label="Window minimum"
           />
           <Slider.Thumb
             className="w-5 h-5 bg-white border-2 border-indigo-400 rounded-full shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:ring-offset-2 cursor-pointer transition-all duration-200 hover:scale-110"
-            aria-label="Window maximum"
           />
         </Slider.Root>
 

@@ -134,7 +134,6 @@ const AlgorithmComparison = ({ data }) => {
             ))}
           </div>
         )}
-
         <ComparisonInstructions
           showNames={showNames}
           currentPair={currentPair}

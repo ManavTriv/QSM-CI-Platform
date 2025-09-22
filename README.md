@@ -18,6 +18,9 @@ A React-based web platform for comparing and evaluating Quantitative Susceptibil
 - [Testing](#testing)
   - [Local Testing](#local-testing)
   - [Test Structure](#test-structure)
+- [Development Guide](#development-guide)
+  - [Adding New Tag Groups](#adding-new-tag-groups)
+  - [Adding New Metrics](#adding-new-metrics)
   - [GitHub Actions Testing](#github-actions-testing)
 - [Thesis Context](#thesis-context)
 
@@ -156,6 +159,130 @@ Tests are configured to run on GitHub Actions with **manual trigger only**:
 3. **Click "Run workflow"** button
 4. **Choose the branch** 
 5. **Click "Run workflow"** to trigger the test run
+
+## Development Guide
+
+### Adding New Tag Groups
+
+The platform supports extensible tag groups for categorizing algorithms (e.g., `type::Deep Learning`). To add a new tag group:
+
+#### 1. Configure the New Tag Group
+
+Edit `src/config/tagGroups.js`:
+
+```javascript
+export const TAG_GROUPS = [
+  {
+    id: 'type',
+    displayName: 'Type',
+    description: 'Algorithm type or category (e.g., Deep Learning, Traditional)',
+  },
+  // Add your new tag group here
+  {
+    id: 'complexity',
+    displayName: 'Complexity', 
+    description: 'Algorithm computational complexity level',
+  },
+];
+```
+
+#### 2. Tag Format
+
+Use the format `groupId::value` in your data:
+- `type::Deep Learning`
+- `complexity::High`
+- `domain::Medical Imaging`
+
+#### 3. Automatic Features
+
+Once configured, the new tag group automatically gets:
+- ✅ **Filter dropdown section** with group header
+- ✅ **Algorithm page display** showing "GroupName: Value"
+- ✅ **NA handling** for algorithms missing the tag group
+- ✅ **Consistent styling** across all UI components
+
+#### 4. Example Usage
+
+```javascript
+// In your algorithm data
+{
+  name: "My Algorithm",
+  tags: [
+    "type::Deep Learning",
+    "complexity::High", 
+    "domain::Medical",
+    "regular-tag"  // ungrouped tags still work
+  ]
+}
+```
+
+The system will automatically:
+- Group `type` and `complexity` tags in separate sections
+- Show `domain::NA` for algorithms missing domain tags
+- Display ungrouped tags in "Other Tags" section
+
+### Adding New Metrics
+
+The platform supports extensible metrics for algorithm evaluation. To add a new metric:
+
+#### 1. Configure the New Metric
+
+Edit `src/config/metrics.js`:
+
+```javascript
+export const METRICS = [
+  // ... existing metrics
+  {
+    key: 'NEW_METRIC',
+    label: 'New Metric',
+    description: 'Detailed description of what this metric measures and how to interpret it.',
+    sortable: true,
+    lowerIsBetter: true, // or false if higher values are better
+    precision: 3, // number of decimal places to display
+    unit: 'optional unit' // e.g., 'ms', '%', 'pixels' (optional)
+  },
+];
+```
+
+#### 2. Update Database Schema
+
+Ensure your database/data source includes the new metric:
+- Add the metric field to your algorithm data objects
+- Use the exact same `key` as defined in the config
+- Ensure values are numeric for proper sorting and visualization
+
+#### 3. Automatic Features
+
+Once configured, the new metric automatically gets:
+- ✅ **Table column** with proper formatting and sorting
+- ✅ **Scatter plot option** for X/Y axis selection
+- ✅ **Metric overview page** with description
+- ✅ **Consistent formatting** with specified precision
+- ✅ **Proper sorting** based on `lowerIsBetter` setting
+
+#### 4. Example Data Structure
+
+```javascript
+// In your algorithm data
+{
+  name: "My Algorithm",
+  tags: ["type::Deep Learning"],
+  RMSE: 0.045,
+  HFEN: 0.123,
+  NEW_METRIC: 0.789, // Your new metric value
+  // ... other metrics
+}
+```
+
+#### 5. Configuration Options
+
+- **`key`**: Unique identifier matching your data property
+- **`label`**: Display name in UI (can include spaces/symbols)
+- **`description`**: Detailed explanation for metric overview pages
+- **`sortable`**: Whether users can sort by this metric in tables
+- **`lowerIsBetter`**: Affects sorting direction and interpretation
+- **`precision`**: Decimal places for display (default: 3)
+- **`unit`**: Optional unit suffix (e.g., "ms", "%")
 
 ## Thesis Context
 

@@ -1,4 +1,5 @@
 import { memo } from "react";
+import { getMetricKeys, formatMetricValue } from "../../config/metrics";
 
 const tableClasses = {
   tbody: "divide-y divide-indigo-100",
@@ -17,27 +18,13 @@ const TableBody = memo(({ data, navigate }) => (
             onClick={() =>
               navigate(`/algorithm?name=${encodeURIComponent(entry.name)}`)
             }
-            aria-label={`View details for ${entry.name}`}
           >
             {entry.name}
           </button>
         </td>
-        {[
-          "Elo",
-          "RMSE",
-          "NRMSE",
-          "HFEN",
-          "MAD",
-          "XSIM",
-          "CC1",
-          "CC2",
-          "NMI",
-          "GXE",
-        ].map((metric) => (
+        {getMetricKeys().map((metric) => (
           <td key={metric} className={tableClasses.td}>
-            {typeof entry[metric] === "number"
-              ? entry[metric].toFixed(3)
-              : "N/A"}
+            {formatMetricValue(metric, entry[metric])}
           </td>
         ))}
       </tr>

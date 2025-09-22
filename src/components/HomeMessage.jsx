@@ -1,4 +1,4 @@
-import { BarChart, Image, Scale, Users } from "lucide-react";
+import { BarChart, Image, Scale, Users, BarChart3 } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const navItems = [
@@ -19,6 +19,12 @@ const navItems = [
     title: "Compare",
     link: "/compare",
     description: "Compare algorithms side-by-side",
+  },
+  {
+    icon: <BarChart3 size={44} strokeWidth={1.5} />,
+    title: "Graphs",
+    link: "/graphs",
+    description: "Interactive scatter plots and visualizations",
   },
   {
     icon: <Users size={44} strokeWidth={1.5} />,
@@ -45,7 +51,7 @@ const HomeMessage = () => {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 max-w-screen-xl w-full">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 lg:gap-6 max-w-screen-xl w-full">
         {navItems.map(({ icon, title, link, description }) => (
           <Link
             to={link}

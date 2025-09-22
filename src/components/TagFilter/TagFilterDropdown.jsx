@@ -1,10 +1,11 @@
-import { Tag, X, Search } from "lucide-react";
+import { Tag, X, Search, Layers } from "lucide-react";
 
 const TagFilterDropdown = ({
   isOpen,
   dropdownPosition,
   availableTags,
   filteredTags,
+  processedTags,
   selectedTags,
   tagSearchTerm,
   setTagSearchTerm,
@@ -66,20 +67,71 @@ const TagFilterDropdown = ({
         <div className="max-h-48 overflow-y-auto">
           {filteredTags.length > 0 ? (
             <div className="p-2">
-              {filteredTags.map((tag) => (
-                <button
-                  key={tag}
-                  onClick={() => handleTagToggle(tag)}
-                  className={`w-full flex items-center gap-2 px-2 py-1.5 text-sm font-radio rounded transition-colors cursor-pointer ${
-                    selectedTags.includes(tag)
-                      ? "bg-indigo-100 text-indigo-700"
-                      : "text-stone-700 hover:bg-gray-50"
-                  }`}
-                >
-                  <Tag className="w-3 h-3" />
-                  <span className="truncate">{tag}</span>
-                </button>
-              ))}
+              {/* Grouped Tags */}
+              {processedTags && Object.entries(processedTags.grouped).map(([groupId, groupValues]) => {
+                const filteredGroupValues = groupValues.filter(value => {
+                  const fullTag = `${groupId}::${value}`;
+                  return filteredTags.includes(fullTag);
+                });
+
+                if (filteredGroupValues.length === 0) return null;
+
+                return (
+                  <div key={groupId} className="mb-3">
+                    <div className="flex items-center gap-2 px-2 py-1 mb-1">
+                      <Tag className="w-3 h-3 text-indigo-500" />
+                      <span className="text-xs font-semibold text-indigo-700 uppercase tracking-wide">
+                        {groupId}
+                      </span>
+                    </div>
+                    {filteredGroupValues.map((value) => {
+                      const fullTag = `${groupId}::${value}`;
+                      return (
+                        <button
+                          key={fullTag}
+                          onClick={() => handleTagToggle(fullTag)}
+                          className={`w-full flex items-center gap-2 px-4 py-1.5 text-sm font-radio rounded transition-colors cursor-pointer ${
+                            selectedTags.includes(fullTag)
+                              ? "bg-indigo-200 text-indigo-800 border border-indigo-300"
+                              : "text-stone-700 hover:bg-gray-50"
+                          }`}
+                        >
+                          <Tag className="w-3 h-3" />
+                          <span className="truncate">{value}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                );
+              })}
+
+              {/* Ungrouped Tags */}
+              {processedTags && processedTags.ungrouped.filter(tag => filteredTags.includes(tag)).length > 0 && (
+                <div className="mb-3">
+                  <div className="flex items-center gap-2 px-2 py-1 mb-1">
+                    <Tag className="w-3 h-3 text-indigo-500" />
+                    <span className="text-xs font-semibold text-indigo-700 uppercase tracking-wide">
+                      Other Tags
+                    </span>
+                  </div>
+                  {processedTags.ungrouped
+                    .filter(tag => filteredTags.includes(tag))
+                    .map((tag) => (
+                      <button
+                        key={tag}
+                        onClick={() => handleTagToggle(tag)}
+                        className={`w-full flex items-center gap-2 px-4 py-1.5 text-sm font-radio rounded transition-colors cursor-pointer ${
+                          selectedTags.includes(tag)
+                            ? "bg-indigo-100 text-indigo-700"
+                            : "text-stone-700 hover:bg-gray-50"
+                        }`}
+                      >
+                        <Tag className="w-3 h-3" />
+                        <span className="truncate">{tag}</span>
+                      </button>
+                    ))}
+                </div>
+              )}
             </div>
           ) : tagSearchTerm ? (
             <div className="p-4 text-center text-sm text-stone-600 font-radio">

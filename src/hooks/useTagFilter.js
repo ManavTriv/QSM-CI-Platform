@@ -1,36 +1,33 @@
 import { useState, useMemo } from "react";
+import useProcessedTags from "./useProcessedTags";
 
 const useTagFilter = (data, selectedTags, onTagsChange) => {
   const [isOpen, setIsOpen] = useState(false);
   const [tagSearchTerm, setTagSearchTerm] = useState("");
 
-  const availableTags = useMemo(() => {
-    const tagSet = new Set();
-    data.forEach((item) => {
-      if (item.tags && Array.isArray(item.tags)) {
-        item.tags.forEach((tag) => tagSet.add(tag));
-      }
-    });
-    return Array.from(tagSet).sort();
-  }, [data]);
+  const { allProcessedTags } = useProcessedTags([], data);
 
   const filteredTags = useMemo(() => {
-    let tags = availableTags;
-    
+    let tags = allProcessedTags.all;
+
     // Filter by search term
     if (tagSearchTerm.trim()) {
-      tags = tags.filter(tag => 
+      tags = tags.filter((tag) =>
         tag.toLowerCase().includes(tagSearchTerm.toLowerCase())
       );
     }
-    
+
     // Separate selected and unselected tags
-    const selectedTagsFiltered = tags.filter(tag => selectedTags.includes(tag));
-    const unselectedTagsFiltered = tags.filter(tag => !selectedTags.includes(tag));
-    
+    const selectedTagsFiltered = tags.filter((tag) =>
+      selectedTags.includes(tag)
+    );
+    const unselectedTagsFiltered = tags.filter(
+      (tag) => !selectedTags.includes(tag)
+    );
+
     // Pin selected tags to the top
     return [...selectedTagsFiltered, ...unselectedTagsFiltered];
-  }, [availableTags, tagSearchTerm, selectedTags]);
+  }, [allProcessedTags.all, tagSearchTerm, selectedTags]);
 
   const handleTagToggle = (tag) => {
     if (selectedTags.includes(tag)) {
@@ -47,7 +44,7 @@ const useTagFilter = (data, selectedTags, onTagsChange) => {
   const toggleDropdown = () => {
     setIsOpen((prev) => !prev);
     if (!isOpen) {
-      setTagSearchTerm(""); 
+      setTagSearchTerm("");
     }
   };
 
@@ -63,8 +60,9 @@ const useTagFilter = (data, selectedTags, onTagsChange) => {
     isOpen,
     tagSearchTerm,
     setTagSearchTerm,
-    availableTags,
+    availableTags: allProcessedTags.all,
     filteredTags,
+    processedTags: allProcessedTags,
     handleTagToggle,
     clearAllTags,
     toggleDropdown,
