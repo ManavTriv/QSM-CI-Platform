@@ -37,13 +37,14 @@ const AlgorithmContent = () => {
         subtitle="Algorithm details and visualization"
       >
         <div className="space-y-3">
-
-          {tags && Array.isArray(tags) && tags.length > 0 && (
-            <div className="bg-indigo-50 rounded-lg p-3">
-              <div className="flex items-start gap-3">
-                <Tag className="h-4 w-4 text-indigo-600 flex-shrink-0 mt-0.5" />
-                <div>
-                  <h3 className="font-semibold text-stone-800 mb-1 text-base">Tags</h3>
+          <div className="bg-indigo-50 rounded-lg p-3">
+            <div className="flex items-start gap-3">
+              <Tag className="h-4 w-4 text-indigo-600 flex-shrink-0 mt-0.5" />
+              <div>
+                <h3 className="font-semibold text-stone-800 mb-1 text-base">
+                  Tags
+                </h3>
+                {tags && Array.isArray(tags) && tags.length > 0 ? (
                   <div className="flex flex-wrap gap-2 mt-2">
                     {tags.map((tag) => (
                       <span
@@ -54,24 +55,30 @@ const AlgorithmContent = () => {
                       </span>
                     ))}
                   </div>
-                </div>
-              </div>
-            </div>
-          )}
-          
-          {algorithmDescription && algorithmDescription.trim() && (
-            <div className="bg-gray-50 rounded-lg p-3">
-              <div className="flex items-start gap-3">
-                <FileText className="h-4 w-4 text-indigo-600 flex-shrink-0 mt-0.5" />
-                <div>
-                  <h3 className="font-semibold text-stone-800 mb-1 text-base">Description</h3>
-                  <div className="text-sm text-stone-700 leading-relaxed">
-                    {algorithmDescription}
+                ) : (
+                  <div className="text-sm text-stone-600">
+                    No tags are available for this algorithm.
                   </div>
+                )}
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-gray-50 rounded-lg p-3">
+            <div className="flex items-start gap-3">
+              <FileText className="h-4 w-4 text-indigo-600 flex-shrink-0 mt-0.5" />
+              <div>
+                <h3 className="font-semibold text-stone-800 mb-1 text-base">
+                  Description
+                </h3>
+                <div className="text-sm text-stone-700 leading-relaxed">
+                  {algorithmDescription && algorithmDescription.trim()
+                    ? algorithmDescription
+                    : "No description is available for this algorithm."}
                 </div>
               </div>
             </div>
-          )}
+          </div>
         </div>
       </MessageCard>
 
