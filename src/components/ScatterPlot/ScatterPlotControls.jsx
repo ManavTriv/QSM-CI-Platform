@@ -1,6 +1,15 @@
 import { ChevronDown } from "lucide-react";
 
-const ScatterPlotControls = ({ xAxis, yAxis, groupBy, availableMetrics, groupOptions, onXAxisChange, onYAxisChange, onGroupByChange }) => {
+const ScatterPlotControls = ({
+  xAxis,
+  yAxis,
+  groupBy,
+  availableMetrics,
+  groupOptions,
+  onXAxisChange,
+  onYAxisChange,
+  onGroupByChange,
+}) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
       <div className="space-y-2">

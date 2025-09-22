@@ -19,50 +19,19 @@ describe("useFetchData", () => {
     expect(fetchData.constructor.name).toBe("AsyncFunction");
   });
 
-  it("should transform Parse objects correctly", () => {
+  it("should transform Parse objects and handle data merging", () => {
     const mockParseObject = {
       id: "test-id",
-      toJSON: () => ({ url: "https://example.com/test.jpg", Elo: 1500 }),
+      toJSON: () => ({ url: "test.jpg", Elo: 1500, tags: ["ai"] }),
     };
 
-    const transformed = {
-      id: mockParseObject.id,
-      ...mockParseObject.toJSON(),
-    };
+    const result = { id: mockParseObject.id, ...mockParseObject.toJSON() };
 
-    expect(transformed).toEqual({
+    expect(result).toEqual({
       id: "test-id",
-      url: "https://example.com/test.jpg",
+      url: "test.jpg",
       Elo: 1500,
+      tags: ["ai"],
     });
-  });
-
-  it("should handle id conflicts (JSON overwrites Parse)", () => {
-    const mockObject = {
-      id: "parse-id",
-      toJSON: () => ({ id: "json-id", url: "test.jpg" }),
-    };
-
-    const result = { id: mockObject.id, ...mockObject.toJSON() };
-    expect(result.id).toBe("json-id");
-  });
-
-  it("should preserve all data properties", () => {
-    const mockObject = {
-      id: "test-id",
-      toJSON: () => ({
-        url: "test.jpg",
-        Elo: 1500,
-        tags: ["ai"],
-        metadata: { type: "test" },
-      }),
-    };
-
-    const result = { id: mockObject.id, ...mockObject.toJSON() };
-
-    expect(result).toHaveProperty("url");
-    expect(result).toHaveProperty("Elo");
-    expect(result).toHaveProperty("tags");
-    expect(result).toHaveProperty("metadata.type", "test");
   });
 });

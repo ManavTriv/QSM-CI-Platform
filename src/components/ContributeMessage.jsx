@@ -1,4 +1,4 @@
-import { Code2, Globe } from "lucide-react";
+import { Code2, Globe, ArrowRight } from "lucide-react";
 
 const contributeItems = [
   {
@@ -49,19 +49,7 @@ const ContributeMessage = () => {
             </p>
             <div className="flex items-center text-sm text-indigo-500 group-hover:text-indigo-600 font-medium">
               <span>Visit GitHub Repository</span>
-              <svg
-                className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M17 8l4 4m0 0l-4 4m4-4H3"
-                />
-              </svg>
+              <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
             </div>
           </a>
         ))}

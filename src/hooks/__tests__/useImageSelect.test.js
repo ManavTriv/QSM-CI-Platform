@@ -48,24 +48,21 @@ describe("useImageSelect", () => {
     expect(result.current.selectedName).toBe("Select an algorithm");
   });
 
-  it("should filter data by search term", () => {
+  it("should filter data by search term and tags", () => {
     const { result } = renderHook(() => useImageSelect(mockSetImage));
 
+    // Test search filtering
     act(() => {
       result.current.setSearchTerm("one");
     });
-
     expect(result.current.filteredData).toHaveLength(1);
     expect(result.current.filteredData[0].name).toBe("ALGORITHM ONE");
-  });
 
-  it("should filter data by tags", () => {
-    const { result } = renderHook(() => useImageSelect(mockSetImage));
-
+    // Test tag filtering
     act(() => {
+      result.current.setSearchTerm("");
       result.current.setSelectedTags(["ai"]);
     });
-
     expect(result.current.filteredData).toHaveLength(1);
     expect(result.current.filteredData[0].name).toBe("ALGORITHM ONE");
   });

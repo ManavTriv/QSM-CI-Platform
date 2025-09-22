@@ -27,65 +27,21 @@ describe("useProcessedData", () => {
     expect(result.current.error).toBeNull();
   });
 
-  it("should extract algorithm name from URL", async () => {
+  it("should process algorithm names from URLs and handle fallbacks", async () => {
     const mockData = [
-      {
-        id: "test-1",
-        url: "https://example.com/Algorithm_Name_Test.jpg",
-        Elo: 1500,
-      },
+      { id: "1", url: "https://example.com/Algorithm_Test.jpg", Elo: 1500 },
+      { id: "2", url: "https://example.com/Neural%20Network.png", Elo: 1600 },
+      { id: "3", objectId: "fallback-123", url: "invalid-url", Elo: 1400 },
     ];
 
     fetchData.mockResolvedValue(mockData);
-
     const { result } = renderHook(() => useProcessedData());
 
-    await waitFor(() => {
-      expect(result.current.loading).toBe(false);
-    });
+    await waitFor(() => expect(result.current.loading).toBe(false));
 
-    expect(result.current.data[0].name).toBe("ALGORITHM NAME TEST");
-  });
-
-  it("should handle URL decoding and file extensions", async () => {
-    const mockData = [
-      {
-        id: "test-2",
-        url: "https://example.com/Neural%20Network_Model.png",
-        Elo: 1600,
-      },
-    ];
-
-    fetchData.mockResolvedValue(mockData);
-
-    const { result } = renderHook(() => useProcessedData());
-
-    await waitFor(() => {
-      expect(result.current.loading).toBe(false);
-    });
-
-    expect(result.current.data[0].name).toBe("NEURAL NETWORK MODEL");
-  });
-
-  it("should use objectId fallback for invalid URLs", async () => {
-    const mockData = [
-      {
-        id: "test-3",
-        objectId: "fallback-algorithm-123",
-        url: "invalid-url",
-        Elo: 1400,
-      },
-    ];
-
-    fetchData.mockResolvedValue(mockData);
-
-    const { result } = renderHook(() => useProcessedData());
-
-    await waitFor(() => {
-      expect(result.current.loading).toBe(false);
-    });
-
-    expect(result.current.data[0].name).toBe("fallback-algorithm-123");
+    expect(result.current.data[0].name).toBe("ALGORITHM TEST");
+    expect(result.current.data[1].name).toBe("NEURAL NETWORK");
+    expect(result.current.data[2].name).toBe("fallback-123");
   });
 
   it("should handle fetch errors", async () => {

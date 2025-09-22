@@ -56,7 +56,7 @@ const AlgorithmComparison = ({ data }) => {
             disabled={selectedAlgorithm === null}
             className={`px-6 py-3 font-radio font-medium rounded-lg transition-all shadow-sm ${
               selectedAlgorithm
-                ? "bg-indigo-500 text-white hover:bg-indigo-600 cursor-pointer"
+                ? "bg-indigo-400 text-white hover:bg-indigo-500 cursor-pointer"
                 : "bg-gray-300 text-gray-500 cursor-not-allowed"
             }`}
           >
@@ -90,7 +90,7 @@ const AlgorithmComparison = ({ data }) => {
                             ? "bg-green-500 text-white cursor-default"
                             : selectedAlgorithm !== null
                             ? "bg-gray-200 text-gray-500 cursor-not-allowed"
-                            : "bg-indigo-500 text-white hover:bg-indigo-600 cursor-pointer"
+                            : "bg-indigo-400 text-white hover:bg-indigo-500 cursor-pointer"
                         }`}
                         title={
                           selectedAlgorithm?.objectId === algorithm.objectId

@@ -12,7 +12,7 @@ describe("useEloUpdater", () => {
   });
 
   it("should calculate expected score correctly for equal ratings", () => {
-    // Test the mathematical formula directly
+    // Test the formula directly
     const expectedScore = 1 / (1 + Math.pow(10, (1500 - 1500) / 400));
     expect(expectedScore).toBe(0.5);
   });

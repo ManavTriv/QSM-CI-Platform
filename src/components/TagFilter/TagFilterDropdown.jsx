@@ -1,4 +1,6 @@
-import { Tag, X, Search, Layers } from "lucide-react";
+import TagSearchInput from "./TagSearchInput";
+import TagGroupSection from "./TagGroupSection";
+import TagFilterEmpty from "./TagFilterEmpty";
 
 const TagFilterDropdown = ({
   isOpen,
@@ -43,24 +45,11 @@ const TagFilterDropdown = ({
           </div>
 
           {availableTags.length > 5 && (
-            <div className="relative">
-              <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 w-3 h-3 text-stone-400" />
-              <input
-                type="text"
-                placeholder="Search tags..."
-                value={tagSearchTerm}
-                onChange={(e) => setTagSearchTerm(e.target.value)}
-                className="w-full pl-7 pr-7 py-1.5 text-xs font-radio border border-gray-200 rounded focus:outline-none focus:ring-1 focus:ring-indigo-400 focus:border-transparent"
-              />
-              {tagSearchTerm && (
-                <button
-                  onClick={clearTagSearch}
-                  className="absolute right-2 top-1/2 transform -translate-y-1/2 w-3 h-3 text-stone-400 hover:text-stone-600 cursor-pointer"
-                >
-                  <X size={12} />
-                </button>
-              )}
-            </div>
+            <TagSearchInput
+              searchTerm={tagSearchTerm}
+              onSearchChange={setTagSearchTerm}
+              onClearSearch={clearTagSearch}
+            />
           )}
         </div>
 
@@ -68,85 +57,44 @@ const TagFilterDropdown = ({
           {filteredTags.length > 0 ? (
             <div className="p-2">
               {/* Grouped Tags */}
-              {processedTags && Object.entries(processedTags.grouped).map(([groupId, groupValues]) => {
-                const filteredGroupValues = groupValues.filter(value => {
-                  const fullTag = `${groupId}::${value}`;
-                  return filteredTags.includes(fullTag);
-                });
+              {processedTags &&
+                Object.entries(processedTags.grouped).map(
+                  ([groupId, groupValues]) => {
+                    const filteredGroupTags = groupValues
+                      .map((value) => `${groupId}::${value}`)
+                      .filter((fullTag) => filteredTags.includes(fullTag));
 
-                if (filteredGroupValues.length === 0) return null;
-
-                return (
-                  <div key={groupId} className="mb-3">
-                    <div className="flex items-center gap-2 px-2 py-1 mb-1">
-                      <Tag className="w-3 h-3 text-indigo-500" />
-                      <span className="text-xs font-semibold text-indigo-700 uppercase tracking-wide">
-                        {groupId}
-                      </span>
-                    </div>
-                    {filteredGroupValues.map((value) => {
-                      const fullTag = `${groupId}::${value}`;
-                      return (
-                        <button
-                          key={fullTag}
-                          onClick={() => handleTagToggle(fullTag)}
-                          className={`w-full flex items-center gap-2 px-4 py-1.5 text-sm font-radio rounded transition-colors cursor-pointer ${
-                            selectedTags.includes(fullTag)
-                              ? "bg-indigo-200 text-indigo-800 border border-indigo-300"
-                              : "text-stone-700 hover:bg-gray-50"
-                          }`}
-                        >
-                          <Tag className="w-3 h-3" />
-                          <span className="truncate">{value}</span>
-                        </button>
-                      );
-                    })}
-                  </div>
-                );
-              })}
+                    return (
+                      <TagGroupSection
+                        key={groupId}
+                        groupId={groupId}
+                        groupTitle={groupId}
+                        tags={filteredGroupTags}
+                        selectedTags={selectedTags}
+                        onTagToggle={handleTagToggle}
+                      />
+                    );
+                  }
+                )}
 
               {/* Ungrouped Tags */}
-              {processedTags && processedTags.ungrouped.filter(tag => filteredTags.includes(tag)).length > 0 && (
-                <div className="mb-3">
-                  <div className="flex items-center gap-2 px-2 py-1 mb-1">
-                    <Tag className="w-3 h-3 text-indigo-500" />
-                    <span className="text-xs font-semibold text-indigo-700 uppercase tracking-wide">
-                      Other Tags
-                    </span>
-                  </div>
-                  {processedTags.ungrouped
-                    .filter(tag => filteredTags.includes(tag))
-                    .map((tag) => (
-                      <button
-                        key={tag}
-                        onClick={() => handleTagToggle(tag)}
-                        className={`w-full flex items-center gap-2 px-4 py-1.5 text-sm font-radio rounded transition-colors cursor-pointer ${
-                          selectedTags.includes(tag)
-                            ? "bg-indigo-100 text-indigo-700"
-                            : "text-stone-700 hover:bg-gray-50"
-                        }`}
-                      >
-                        <Tag className="w-3 h-3" />
-                        <span className="truncate">{tag}</span>
-                      </button>
-                    ))}
-                </div>
+              {processedTags && (
+                <TagGroupSection
+                  groupId={null}
+                  groupTitle="Other Tags"
+                  tags={processedTags.ungrouped.filter((tag) =>
+                    filteredTags.includes(tag)
+                  )}
+                  selectedTags={selectedTags}
+                  onTagToggle={handleTagToggle}
+                />
               )}
             </div>
-          ) : tagSearchTerm ? (
-            <div className="p-4 text-center text-sm text-stone-600 font-radio">
-              <p>No tags found matching "{tagSearchTerm}"</p>
-              <button
-                onClick={clearTagSearch}
-                className="text-indigo-400 hover:text-indigo-600 font-radio text-xs cursor-pointer mt-1"
-              >
-                Clear search
-              </button>
-            </div>
           ) : (
-            <div className="p-4 text-center text-sm text-stone-600 font-radio">
-              <p>No tags available</p>
-            </div>
+            <TagFilterEmpty
+              searchTerm={tagSearchTerm}
+              onClearSearch={clearTagSearch}
+            />
           )}
         </div>
       </div>

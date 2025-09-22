@@ -21,34 +21,36 @@ const useImageSelect = (setImage) => {
 
   const filteredData = useMemo(() => {
     if (!data || !Array.isArray(data)) return [];
-    
+
     let filtered = [...data];
-    
+
     // Filter by search term
     if (searchTerm.trim()) {
       filtered = filtered.filter((item) =>
         item?.name?.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
-    
-    // Filter by tags 
+
+    // Filter by tags
     if (selectedTags.length > 0) {
       filtered = filtered.filter((item) => {
         // Get processed tags for this algorithm (handles empty tags by adding NA values)
-        const { grouped, ungrouped } = getAlgorithmProcessedTags(item.tags || []);
-        
+        const { grouped, ungrouped } = getAlgorithmProcessedTags(
+          item.tags || []
+        );
+
         // Create a list of all tags this algorithm has (including NA values for missing groups)
         const algorithmTags = [...ungrouped];
         Object.entries(grouped).forEach(([groupId, groupTags]) => {
-          groupTags.forEach(tagObj => {
+          groupTags.forEach((tagObj) => {
             algorithmTags.push(tagObj.original);
           });
         });
-        
+
         return selectedTags.every((tag) => algorithmTags.includes(tag));
       });
     }
-    
+
     return filtered.map(({ url, name }) => ({ url, name }));
   }, [data, searchTerm, selectedTags]);
 
@@ -56,17 +58,21 @@ const useImageSelect = (setImage) => {
     if (!selectedUrl || !data || !Array.isArray(data)) {
       return "Select an algorithm";
     }
-    return data.find((item) => item.url === selectedUrl)?.name || "Select an algorithm";
+    return (
+      data.find((item) => item.url === selectedUrl)?.name ||
+      "Select an algorithm"
+    );
   }, [data, selectedUrl]);
 
   const handleSelect = (url) => {
     const newUrl = selectedUrl === url ? null : url;
     setSelectedUrl(newUrl);
-    
-    const algorithmName = newUrl && data && Array.isArray(data) 
-      ? data.find((item) => item.url === newUrl)?.name || null 
-      : null;
-    
+
+    const algorithmName =
+      newUrl && data && Array.isArray(data)
+        ? data.find((item) => item.url === newUrl)?.name || null
+        : null;
+
     setImage(newUrl, algorithmName);
     setIsOpen(false);
   };
@@ -87,7 +93,7 @@ const useImageSelect = (setImage) => {
     filteredData,
     selectedName,
     selectedUrl,
-    
+
     // State
     searchTerm,
     setSearchTerm,
@@ -96,7 +102,7 @@ const useImageSelect = (setImage) => {
     isOpen,
     dropdownWidth,
     buttonRef,
-    
+
     // Actions
     handleSelect,
     clearSelection,

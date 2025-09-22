@@ -8,7 +8,13 @@ import TableSearch from "./TableSearch";
 import TagFilter from "../TagFilter";
 import Table from "./Table";
 
-const TableControls = ({ data, searchTerm, selectedTags, onSearchChange, onTagsChange }) => (
+const TableControls = ({
+  data,
+  searchTerm,
+  selectedTags,
+  onSearchChange,
+  onTagsChange,
+}) => (
   <div className="flex flex-col sm:flex-row gap-3">
     <div className="flex-1">
       <TableSearch
@@ -28,7 +34,11 @@ const TableControls = ({ data, searchTerm, selectedTags, onSearchChange, onTagsC
   </div>
 );
 
-const EmptyStateMessages = ({ searchTerm = "", selectedTags = [], onClearSearch,}) => {
+const EmptyStateMessages = ({
+  searchTerm = "",
+  selectedTags = [],
+  onClearSearch,
+}) => {
   if (!searchTerm.trim() && selectedTags.length === 0) return null;
 
   const getMessage = () => {

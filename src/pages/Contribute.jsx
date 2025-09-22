@@ -1,16 +1,11 @@
-import Navbar from "../components/Navbar";
 import ContributeMessage from "../components/ContributeMessage";
+import PageLayout from "../components/Layout/PageLayout";
 
 const Contribute = () => {
   return (
-    <div className="bg-[#fffefb] min-h-screen w-full">
-      <Navbar />
-      <div className="py-6">
-        <div className="max-w-7xl mx-auto px-6 space-y-8">
-          <ContributeMessage />
-        </div>
-      </div>
-    </div>
+    <PageLayout>
+      <ContributeMessage />
+    </PageLayout>
   );
 };
 

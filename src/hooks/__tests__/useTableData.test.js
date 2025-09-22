@@ -26,24 +26,19 @@ describe("useTableData", () => {
     expect(result.current.sortedData).toEqual(mockData);
   });
 
-  it("should filter by search term", () => {
+  it("should filter by search term and tags", () => {
     const { result } = renderHook(() => useTableData(mockData));
 
-    act(() => {
-      result.current.setSearchTerm("deep");
-    });
-
+    // Test search filtering
+    act(() => result.current.setSearchTerm("deep"));
     expect(result.current.sortedData).toHaveLength(1);
     expect(result.current.sortedData[0].name).toBe("DEEP LEARNING");
-  });
 
-  it("should filter by tags", () => {
-    const { result } = renderHook(() => useTableData(mockData));
-
+    // Test tag filtering
     act(() => {
+      result.current.setSearchTerm("");
       result.current.setSelectedTags(["ai"]);
     });
-
     expect(result.current.sortedData).toHaveLength(2);
   });
 
@@ -66,7 +61,7 @@ describe("useTableData", () => {
       result.current.requestSort("Elo");
     });
 
-    // Wait for sorting timeout
+    // should timeout here
     await act(async () => {
       await new Promise((resolve) => setTimeout(resolve, 150));
     });

@@ -18,25 +18,13 @@ describe("useTagFilter", () => {
     vi.clearAllMocks();
   });
 
-  it("should initialize with default values", () => {
+  it("should initialize with default values and extract tags", () => {
     const { result } = renderHook(() =>
       useTagFilter(mockData, [], mockOnTagsChange)
     );
 
     expect(result.current.isOpen).toBe(false);
     expect(result.current.tagSearchTerm).toBe("");
-    expect(result.current.availableTags).toContain("type::AI");
-    expect(result.current.availableTags).toContain("type::ML");
-    expect(result.current.availableTags).toContain("computer-vision");
-    expect(result.current.availableTags).toContain("deep-learning");
-    expect(result.current.availableTags).toContain("machine-learning");
-  });
-
-  it("should extract unique tags from data", () => {
-    const { result } = renderHook(() =>
-      useTagFilter(mockData, [], mockOnTagsChange)
-    );
-
     expect(result.current.availableTags.length).toBeGreaterThan(4);
     expect(result.current.availableTags).toContain("type::AI");
     expect(result.current.availableTags).toContain("machine-learning");

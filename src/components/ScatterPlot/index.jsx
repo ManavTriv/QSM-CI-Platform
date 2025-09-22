@@ -6,7 +6,15 @@ import ScatterPlotChart from "./ScatterPlotChart";
 import useProcessedTags from "../../hooks/useProcessedTags";
 import { getMetricKeys } from "../../config/metrics";
 
-const ScatterPlot = ({ data, xAxis, yAxis, groupBy, onXAxisChange, onYAxisChange, onGroupByChange }) => {
+const ScatterPlot = ({
+  data,
+  xAxis,
+  yAxis,
+  groupBy,
+  onXAxisChange,
+  onYAxisChange,
+  onGroupByChange,
+}) => {
   const [hoveredPoint, setHoveredPoint] = useState(null);
   const { allProcessedTags } = useProcessedTags([], data);
 
@@ -51,7 +59,9 @@ const ScatterPlot = ({ data, xAxis, yAxis, groupBy, onXAxisChange, onYAxisChange
       <MessageCard
         icon={BarChart3}
         title={`${yAxis} vs ${xAxis}`}
-        subtitle={`Interactive scatter plot${groupBy !== "none" ? ` grouped by ${groupBy}` : ""}`}
+        subtitle={`Interactive scatter plot${
+          groupBy !== "none" ? ` grouped by ${groupBy}` : ""
+        }`}
       >
         <ScatterPlotChart
           data={data}
