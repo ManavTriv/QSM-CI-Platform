@@ -34,13 +34,14 @@ A React-based web platform for comparing and evaluating Quantitative Susceptibil
 6. **Algorithm Qualitative Comparisons**: ELO-based pairwise comparison system for community-driven rankings
 7. **ELO Rating**: Dynamic ranking system updated through "which is better?" selections
 8. **Responsive UI**: Modern, accessible design built with Tailwind CSS
+9. **Interative Graphs**: Interative graphs to compare algorithm metrics
 
 ## Tech Stack
 
 - **Frontend**: React 19 (Vite)
 - **Routing**: React Router v7
-- **Styling**: Tailwind CSS v4 
-- **Imaging**: Niivue for medical-image (NIfTI/QSM) viewing
+- **Styling**: Tailwind CSS v4
+- **Imaging**: Niivue for medical-image  viewing
 - **Charts**: Recharts for metric visualisation
 - **Testing**: Vitest + Testing Library React + JSDOM
 - **Backend (BaaS)**: Parse/Back4App (JS SDK)
@@ -62,7 +63,6 @@ root/
 │  ├─ pages/                 # Route pages (Home, Overview, Graphs, etc.)
 │  ├─ hooks/                 # Custom React hooks
 │  ├─ config/                # Configuration (tags, metrics)
-│  ├─ data/                  # Static data
 │  ├─ api/                   # Parse client setup
 │  ├─ routes/                # App routing
 │  ├─ styles/                # Global styles
@@ -118,12 +118,9 @@ root/
 
 ### Available Scripts
 ```bash
-# Development
 npm run dev              # Start dev server 
 npm run build            # Build for production
 npm run preview          # Preview production build
-
-# Code Quality
 npm run lint             # Run ESLint
 ```
 
@@ -133,10 +130,6 @@ Create a `.env` file in the root directory with the following variables:
 VITE_PARSE_APP_ID=your_parse_app_id
 VITE_PARSE_JS_KEY=your_parse_js_key
 ```
-
-### Custom Utilities
-- **`.font-radio`**: Applies the Radio Canada font family
-- **Tailwind CSS**: Custom utility classes for consistent styling
 
 ## Testing
 
@@ -148,10 +141,11 @@ npm run test
 ```
 
 ### Test Structure
-- **Test files**: Located in `src/api/__tests__/`, `src/hooks/__tests__/`, and `src/utils/__tests__/`
+- **Test files**: Located in `src/api/__tests__/`, `src/hooks/__tests__/`, `src/config/__tests__/`, and `src/utils/__tests__/`
+- **Test coverage**: Core hooks, API config, tag/metric configurations, and utilities
 - **Test setup**: Configured in `src/test/setup.js`
 - **Test runner**: Vitest with JSDOM environment
-- **Testing utilities**: React Testing Library for component testing
+- **Testing utilities**: React Testing Library for hook testing
 
 ### GitHub Actions Testing
 Tests are configured to run on GitHub Actions with **manual trigger only**:
@@ -193,7 +187,7 @@ export const TAG_GROUPS = [
   tags: [
     "type::Deep Learning",
     "complexity::High",
-    "regular-tag"  // ungrouped tags work too
+    "regular-tag"  // ungrouped tags are fine as well
   ]
 }
 ```

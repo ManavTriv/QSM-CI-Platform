@@ -1,9 +1,10 @@
 import { Info, FileText, BarChart } from "lucide-react";
-import metricDescriptions from "../data/metricDescriptions";
+import { getMetricDescriptions } from "../config/metrics";
 import MessageCard from "./MessageCard";
 import InfoSection from "./InfoSection";
 
 const MetricOverview = ({ metric }) => {
+  const metricDescriptions = getMetricDescriptions();
   const description =
     metricDescriptions[metric] ||
     "No description is available for this metric.";

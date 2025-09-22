@@ -73,7 +73,6 @@ const Navbar = () => {
           <button
             onClick={toggleMobileMenu}
             className="md:hidden p-2 rounded-lg text-stone-600 hover:text-indigo-600 hover:bg-indigo-50 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-1"
-            aria-label="Toggle mobile menu"
           >
             {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
           </button>

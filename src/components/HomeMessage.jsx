@@ -24,7 +24,7 @@ const navItems = [
     icon: <BarChart3 size={44} strokeWidth={1.5} />,
     title: "Graphs",
     link: "/graphs",
-    description: "Interactive scatter plots and visualizations",
+    description: "Interactive scatter plots and visualisations",
   },
   {
     icon: <Users size={44} strokeWidth={1.5} />,
@@ -46,7 +46,7 @@ const HomeMessage = () => {
           Susceptibility Mapping algorithms
         </p>
         <p className="text-sm text-stone-500">
-          Explore interactive visualizations, metrics analysis, and
+          Explore interactive visualisations, metrics analysis, and
           community-driven ELO rankings
         </p>
       </div>
