@@ -52,19 +52,21 @@ A React-based web platform for comparing and evaluating Quantitative Susceptibil
 ```
 root/
 ├─ src/
-│  ├─ components/            # UI building blocks (Niivue viewer, tables, etc.)
-│  │  ├─ AlgorithmComparison/    # Side-by-side comparison components
-│  │  ├─ ImageSelect/            # Image selection components
-│  │  ├─ NiivueViewer/          # Medical image viewer components
-│  │  ├─ ResultTable/           # Data table components
-│  │  └─ TagFilter/             # Tag filtering components
-│  ├─ pages/                 # Route pages (Home, Overview, Images, Compare, etc.)
-│  ├─ hooks/                 # Custom React hooks with tests
-│  ├─ data/                  # Static data (algorithm info, metric descriptions)
-│  ├─ api/                   # Parse client configuration
-│  ├─ routes/                # App routing configuration
+│  ├─ components/            # UI building blocks
+│  │  ├─ AlgorithmComparison/    # Side-by-side comparison
+│  │  ├─ ImageSelect/            # Image selection
+│  │  ├─ NiivueViewer/          # Medical image viewer
+│  │  ├─ ResultTable/           # Data tables
+│  │  ├─ ScatterPlot/           # Interactive charts
+│  │  └─ TagFilter/             # Tag filtering
+│  ├─ pages/                 # Route pages (Home, Overview, Graphs, etc.)
+│  ├─ hooks/                 # Custom React hooks
+│  ├─ config/                # Configuration (tags, metrics)
+│  ├─ data/                  # Static data
+│  ├─ api/                   # Parse client setup
+│  ├─ routes/                # App routing
 │  ├─ styles/                # Global styles
-│  ├─ test/                  # Test setup and utilities
+│  ├─ test/                  # Test utilities
 │  ├─ utils/                 # Helper functions
 │  ├─ App.jsx                # Main app component
 │  └─ main.jsx               # Vite entry point
@@ -164,125 +166,82 @@ Tests are configured to run on GitHub Actions with **manual trigger only**:
 
 ### Adding New Tag Groups
 
-The platform supports extensible tag groups for categorizing algorithms (e.g., `type::Deep Learning`). To add a new tag group:
+Tag groups categorise algorithms using the format `groupId::value` (e.g., `type::Deep Learning`).
 
-#### 1. Configure the New Tag Group
-
+#### 1. Configure Tag Group
 Edit `src/config/tagGroups.js`:
-
 ```javascript
 export const TAG_GROUPS = [
   {
     id: 'type',
     displayName: 'Type',
-    description: 'Algorithm type or category (e.g., Deep Learning, Traditional)',
+    description: 'Algorithm type or category',
   },
-  // Add your new tag group here
+  // Add new tag group
   {
     id: 'complexity',
     displayName: 'Complexity', 
-    description: 'Algorithm computational complexity level',
+    description: 'Computational complexity level',
   },
 ];
 ```
 
-#### 2. Tag Format
-
-Use the format `groupId::value` in your data:
-- `type::Deep Learning`
-- `complexity::High`
-- `domain::Medical Imaging`
-
-#### 3. Automatic Features
-
-Once configured, the new tag group automatically gets:
-- ✅ **Filter dropdown section** with group header
-- ✅ **Algorithm page display** showing "GroupName: Value"
-- ✅ **NA handling** for algorithms missing the tag group
-- ✅ **Consistent styling** across all UI components
-
-#### 4. Example Usage
-
+#### 2. Use in Data
 ```javascript
-// In your algorithm data
 {
   name: "My Algorithm",
   tags: [
     "type::Deep Learning",
-    "complexity::High", 
-    "domain::Medical",
-    "regular-tag"  // ungrouped tags still work
+    "complexity::High",
+    "regular-tag"  // ungrouped tags work too
   ]
 }
 ```
 
-The system will automatically:
-- Group `type` and `complexity` tags in separate sections
-- Show `domain::NA` for algorithms missing domain tags
-- Display ungrouped tags in "Other Tags" section
+#### 3. Automatic Updates to
+- Filter dropdown sections
+- Algorithm page display ("Type: Deep Learning")
+- NA handling for missing tags
+- Consistent UI styling
 
 ### Adding New Metrics
 
-The platform supports extensible metrics for algorithm evaluation. To add a new metric:
+Add new metrics for algorithm evaluation and visualization.
 
-#### 1. Configure the New Metric
-
+#### 1. Configure Metric
 Edit `src/config/metrics.js`:
-
 ```javascript
 export const METRICS = [
   // ... existing metrics
   {
     key: 'NEW_METRIC',
     label: 'New Metric',
-    description: 'Detailed description of what this metric measures and how to interpret it.',
+    description: 'What this metric measures',
     sortable: true,
-    lowerIsBetter: true, // or false if higher values are better
-    precision: 3, // number of decimal places to display
-    unit: 'optional unit' // e.g., 'ms', '%', 'pixels' (optional)
+    lowerIsBetter: true, // or false
+    precision: 3, // decimal places
+    unit: 'ms' // optional
   },
 ];
 ```
 
-#### 2. Update Database Schema
-
-Ensure your database/data source includes the new metric:
-- Add the metric field to your algorithm data objects
-- Use the exact same `key` as defined in the config
-- Ensure values are numeric for proper sorting and visualization
-
-#### 3. Automatic Features
-
-Once configured, the new metric automatically gets:
-- ✅ **Table column** with proper formatting and sorting
-- ✅ **Scatter plot option** for X/Y axis selection
-- ✅ **Metric overview page** with description
-- ✅ **Consistent formatting** with specified precision
-- ✅ **Proper sorting** based on `lowerIsBetter` setting
-
-#### 4. Example Data Structure
-
+#### 2. Update Data
+Add the metric to your algorithm data:
 ```javascript
-// In your algorithm data
 {
   name: "My Algorithm",
   tags: ["type::Deep Learning"],
   RMSE: 0.045,
-  HFEN: 0.123,
-  NEW_METRIC: 0.789, // Your new metric value
+  NEW_METRIC: 0.789, // Your new metric
   // ... other metrics
 }
 ```
 
-#### 5. Configuration Options
-
-- **`key`**: Unique identifier matching your data property
-- **`label`**: Display name in UI (can include spaces/symbols)
-- **`description`**: Detailed explanation for metric overview pages
-- **`sortable`**: Whether users can sort by this metric in tables
-- **`lowerIsBetter`**: Affects sorting direction and interpretation
-- **`precision`**: Decimal places for display (default: 3)
-- **`unit`**: Optional unit suffix (e.g., "ms", "%")
+#### 3. Automatic Updates to
+- Table column with formatting/sorting
+- Scatter plot X/Y axis option
+- Metric overview page
+- Consistent precision display
 
 ## Thesis Context
 
