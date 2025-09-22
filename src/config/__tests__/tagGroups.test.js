@@ -1,7 +1,3 @@
-/**
- * Tests for tagGroups configuration
- */
-
 import { describe, it, expect } from "vitest";
 import {
   TAG_GROUPS,

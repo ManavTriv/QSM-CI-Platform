@@ -1,7 +1,3 @@
-/**
- * Tests for useAlgorithmComparison Hook
- */
-
 import { renderHook, act } from "@testing-library/react";
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import useAlgorithmComparison from "../useAlgorithmComparison";

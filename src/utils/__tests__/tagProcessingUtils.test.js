@@ -1,7 +1,3 @@
-/**
- * Tests for tagProcessingUtils
- */
-
 import { describe, it, expect, vi } from "vitest";
 import {
   processRawTags,
@@ -72,7 +68,7 @@ describe("tagProcessingUtils", () => {
     });
 
     it("should add NA for missing groups", () => {
-      const data = [{ tags: ["ai"] }]; 
+      const data = [{ tags: ["ai"] }];
       const result = processAllAlgorithmTags(data);
 
       expect(result.grouped.type).toContain("NA");

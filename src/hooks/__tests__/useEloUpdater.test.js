@@ -1,7 +1,3 @@
-/**
- * Tests for useEloUpdater Hook
- */
-
 import { describe, it, expect, vi } from "vitest";
 import useEloUpdater from "../useEloUpdater";
 

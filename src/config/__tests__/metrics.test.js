@@ -1,7 +1,3 @@
-/**
- * Tests for metrics configuration
- */
-
 import { describe, it, expect } from "vitest";
 import {
   METRICS,

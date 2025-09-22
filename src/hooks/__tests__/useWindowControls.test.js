@@ -1,7 +1,3 @@
-/**
- * Tests for useWindowControls Hook
- */
-
 import { describe, it, expect, vi } from "vitest";
 import useWindowControls from "../useWindowControls";
 

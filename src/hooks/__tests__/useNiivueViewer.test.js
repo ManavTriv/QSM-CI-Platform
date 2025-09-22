@@ -1,7 +1,3 @@
-/**
- * Tests for useNiivueViewer Hook
- */
-
 import { describe, it, expect, vi } from "vitest";
 import { renderHook } from "@testing-library/react";
 import useNiivueViewer from "../useNiivueViewer";

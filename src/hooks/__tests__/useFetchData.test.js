@@ -1,7 +1,3 @@
-/**
- * Tests for useFetchData Hook
- */
-
 import { describe, it, expect, vi } from "vitest";
 import fetchData from "../useFetchData";
 

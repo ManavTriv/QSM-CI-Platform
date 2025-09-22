@@ -25,14 +25,10 @@ export const TAG_GROUPS = [
   // },
 ];
 
-/**
- * Delimeter used to separate ID from value
- */
+//Delimeter used to separate ID from value
 export const TAG_DELIMITER = "::";
 
-/**
- * Default value if no value is provided for an ID
- */
+// Default value if no value is provided for an ID
 export const DEFAULT_TAG_VALUE = "NA";
 
 export const getSupportedGroupIds = () => TAG_GROUPS.map((group) => group.id);

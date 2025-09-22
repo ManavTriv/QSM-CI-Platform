@@ -1,7 +1,3 @@
-/**
- * Tests for useImageSelect Hook
- */
-
 import { renderHook, act } from "@testing-library/react";
 import { describe, it, expect, beforeEach, vi } from "vitest";
 

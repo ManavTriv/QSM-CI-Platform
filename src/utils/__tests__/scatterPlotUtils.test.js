@@ -1,7 +1,3 @@
-/**
- * Tests for scatterPlotUtils
- */
-
 import { describe, it, expect } from "vitest";
 import {
   SCATTER_PLOT_COLORS,

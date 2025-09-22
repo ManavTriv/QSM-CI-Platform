@@ -1,7 +1,3 @@
-/**
- * Tests for ensureAnonymousUser utility
- */
-
 import { describe, it, expect } from "vitest";
 import ensureAnonymousUser from "../ensureAnonymousUser";
 
