@@ -26,6 +26,6 @@ jobs:
       - name: Test summary
         if: success()
         run: |
-          echo "✅ All tests passed!"
-          echo "📊 Test summary:"
+          echo "All tests passed!"
+          echo "Test summary:"
           echo "Total tests: $(npm run test:run --silent | grep -o '[0-9]\+ tests' | head -1)"

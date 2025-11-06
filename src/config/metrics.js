@@ -6,7 +6,7 @@
  * Format:
  * - key: unique identifier
  * - label: display name
- * - description: detailed explanation of what the metric measures
+ * - description: explanation of what the metric measures
  * - sortable: whether this metric can be sorted in tables
  * - unit: optional unit of measurement
  * - lowerIsBetter: whether lower values are better
